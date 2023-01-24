@@ -26,3 +26,23 @@ exports.postUserImage = async function(profile, userid){
         return errResponse(baseResponse.DB_ERROR);
     }
 }
+
+exports.postUserNickname = async function(nickname,userid,name){
+    try{
+        if(!nickname){
+            nickname = name;
+        }
+        const connection = await pool.getConnection(async (conn)=> conn);
+
+        const newparams = [nickname, userid, name];
+        const editInfoResult = await userDao.updateUserNickname(connection, newparams);
+        console.log(`${userid}의 닉네임 변경 완료`);
+        connection.release();
+
+        return response(baseResponse.SUCCESS);
+    }
+    catch(err){
+        logger.error(`App - editInfo Service error\n: ${err.message}`);
+        return errResponse(baseResponse.DB_ERROR);
+    }
+}

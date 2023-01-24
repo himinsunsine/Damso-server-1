@@ -19,7 +19,7 @@ async function selectUserId(connection, userid) {
     return userRow;
 }
 
-//1. 내 정보
+//1-1. 내 정보
 
 //내 정보 조회 --ok
 async function selectUserInfo(connection, userid){
@@ -34,7 +34,7 @@ async function selectUserInfo(connection, userid){
 
 //설정 - 문의
 
-//설정 -  이용약관 조회
+//설정 - 이용약관 조회
 
 //설정 - 개인정보 처리방침 조회
 
@@ -42,7 +42,7 @@ async function selectUserInfo(connection, userid){
 
 //내 제보 현황 조회
 
-//내 정보 수정 - 이미지
+//내 정보 수정 - 이미지 --ok
 async function updateUserImage(connection, newparams){
     const updateUserQuery = `
         UPDATE user 
@@ -52,18 +52,18 @@ async function updateUserImage(connection, newparams){
     const updateUserRow = await connection.query(updateUserQuery, newparams);
     return updateUserRow;
 }
-//내 정보 수정 - 닉네임
-// async function updateUserNickname(connection, userid){
-//     const updateUserQuery = `
-//         UPDATE user 
-//         SET nickname = ? 
-//         WHERE user_id = ?;
-//     `;
-//     const updateUserRow = await connection.query(updateUserQuery, userid);
-//     return updateUserRow[0];
-// }
+//내 정보 수정 - 닉네임 --ok
+async function updateUserNickname(connection, newparams){
+    const updateUserQuery = `
+        UPDATE user 
+        SET nickname = ? 
+        WHERE user_id = ?;
+    `;
+    const updateUserRow = await connection.query(updateUserQuery, newparams);
+    return updateUserRow;
+}
 
-//2. 즐겨찾기
+//1-2. 즐겨찾기
 
 //즐겨찾기 조회 --ok
 
@@ -79,16 +79,16 @@ async function selectBookmark(connection, userid){
 
 //시설 클릭 
 
-async function selectFacility(connection, la, lo){
-    const selectFacilityquery = `
+// async function selectFacility(connection, la, lo){
+//     const selectFacilityquery = `
         
-    `;
-    const selectFacility = await connection.query(updateUserQuery, la, lo);
-    return selectFacility[0];
-}
+//     `;
+//     const selectFacility = await connection.query(updateUserQuery, la, lo);
+//     return selectFacility[0];
+// }
 module.exports ={
     selectBookmark,
-    //updateUserNickname,
+    updateUserNickname,
     updateUserImage,
     selectUserInfo,
 };

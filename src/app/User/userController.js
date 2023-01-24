@@ -14,7 +14,7 @@ exports.getTest = async function (req, res) {
 }
 
 /**
- * API No. 1
+ * API No. 1-1
  * API Name : 즐겨찾기 조회 API
  * [GET] /main/heart/{user_id}
  */
@@ -28,7 +28,7 @@ exports.getBookmark = async function (req, res) {
     return res.send(response(baseResponse.SUCCESS, userBookmark));
 }
 /**
- * API No. 2
+ * API No. 1-2
  * API Name : 내 정보 조회 API
  * [GET] /main/profile/{user_id}
  */
@@ -40,15 +40,29 @@ exports.getUserInfo = async function(req, res){
 }
 
 /**
- * API No. 3
+ * API No. 1-3
  * API Name : 내 이미지 수정 API
  * [POST] /main/profile/{user_id}/image
  */
-// exports.postUserImage = async function(req, res){
-//     const profile = req.body;
-//     const userid = req.params.userid;
+exports.postUserImage = async function(req, res){
+    const profile = req.body;
+    const userid = req.params.userid;
 
-//     const UserImageResponse = await userService.postUserImage(profile, userid);
+    const UserImageResponse = await userService.postUserImage(profile, userid);
 
-//     return res.send(UserImageResponse);
-// }
+    return res.send(UserImageResponse);
+}
+/**
+ * API No. 1-4
+ * API Name : 내 닉네임 수정 API
+ * [POST] /main/profile/{user_id}/nickname
+ */
+exports.postUserNickname = async function(req, res){
+    const nickname = req.body;
+    const userid = req.params.userid;
+    const name = req.body;
+
+    const UserNicknameResponse = await userService.postUserNickname(nickname, userid, name);
+
+    return res.send(UserNicknameResponse);
+}
