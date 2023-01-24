@@ -86,6 +86,7 @@ async function selectBookmark(connection, userid){
 //     const selectFacility = await connection.query(updateUserQuery, la, lo);
 //     return selectFacility[0];
 // }
+
 module.exports ={
     selectBookmark,
     updateUserNickname,

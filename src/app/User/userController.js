@@ -45,7 +45,7 @@ exports.getUserInfo = async function(req, res){
  * [POST] /main/profile/{user_id}/image
  */
 exports.postUserImage = async function(req, res){
-    const profile = req.body;
+    const profile = req.body.profile;
     const userid = req.params.userid;
 
     const UserImageResponse = await userService.postUserImage(profile, userid);
@@ -58,9 +58,9 @@ exports.postUserImage = async function(req, res){
  * [POST] /main/profile/{user_id}/nickname
  */
 exports.postUserNickname = async function(req, res){
-    const nickname = req.body;
+    const nickname = req.body.nickname;
     const userid = req.params.userid;
-    const name = req.body;
+    const name = req.body.name;
 
     const UserNicknameResponse = await userService.postUserNickname(nickname, userid, name);
 
