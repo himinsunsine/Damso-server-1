@@ -1,8 +1,7 @@
 const userProvider = require("../../app/User/userProvider");
 const userService = require("../../app/User/userService");
 const baseResponse = require("../../../config/baseResponseStatus");
-const {response, errResponse} = require("../../../config/response");
-
+const { response, errResponse } = require("../../../config/response");
 
 /**
  * API No. 0
@@ -10,8 +9,8 @@ const {response, errResponse} = require("../../../config/response");
  * [GET] /main
  */
 exports.getTest = async function (req, res) {
-    return res.send(response(baseResponse.SUCCESS))
-}
+  return res.send(response(baseResponse.SUCCESS));
+};
 
 /**
  * API No. 1
@@ -19,25 +18,25 @@ exports.getTest = async function (req, res) {
  * [GET] /main/heart/{user_id}
  */
 exports.getBookmark = async function (req, res) {
-    const userid = req.params.userid;
+  const userid = req.params.userid;
 
-    if(!userid){
-        return res.send(errResponse(baseResponse.USER_ID_NOT_MATCH_IN_BOOKMARK));
-    }
-    const userBookmark = await userProvider.retrieveBookmark(userid);
-    return res.send(response(baseResponse.SUCCESS, userBookmark));
-}
+  if (!userid) {
+    return res.send(errResponse(baseResponse.USER_ID_NOT_MATCH_IN_BOOKMARK));
+  }
+  const userBookmark = await userProvider.retrieveBookmark(userid);
+  return res.send(response(baseResponse.SUCCESS, userBookmark));
+};
 /**
  * API No. 2
  * API Name : 내 정보 조회 API
  * [GET] /main/profile/{user_id}
  */
-exports.getUserInfo = async function(req, res){
-    const userid = req.params.userid;
-    
-    const userInfo = await userProvider.retrieveUser(userid);
-    return res.send(response(baseResponse.SUCCESS, userInfo));
-}
+exports.getUserInfo = async function (req, res) {
+  const userid = req.params.userid;
+
+  const userInfo = await userProvider.retrieveUser(userid);
+  return res.send(response(baseResponse.SUCCESS, userInfo));
+};
 
 /**
  * API No. 3
@@ -52,3 +51,15 @@ exports.getUserInfo = async function(req, res){
 
 //     return res.send(UserImageResponse);
 // }
+
+/**
+ * API No. 1-2
+ * API Name : 흡연구역 간단 조회 API
+ * [GET] /main/facility/simple/{facility_id}
+ */
+exports.getFacilitySimpleInfo = async function (req, res) {
+  const facilityid = req.params.facilityid;
+
+  const facilityInfo = await userProvider.retrieveFacility(facilityid);
+  return res.send(response(baseResponse.SUCCESS, facilityInfo));
+};
