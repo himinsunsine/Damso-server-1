@@ -86,14 +86,7 @@ async function selectBookmark(connection, userid) {
   return checkBookmark;
 }
 
-//시설 클릭
-// async function selectFacility(connection, la, lo){
-//     const selectFacilityquery = `
 
-//     `;
-//     const selectFacility = await connection.query(updateUserQuery, la, lo);
-//     return selectFacility[0];
-// }
 
 // 1-2. 흡연구역 간단 조회
 async function selectFacilityInfo(connection, facilityid) {

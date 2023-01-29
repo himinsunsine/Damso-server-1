@@ -2,7 +2,7 @@ module.exports = function (app) {
   const user = require("./userController");
 
   // 0. 테스트 api
-  app.get("/main", user.getTest);
+  //app.get("/main", user.getTest);
 
   //1-2. 흡연구역 간단 조회 api
   app.get("/main/facility/simple/:facilityid", user.getFacilitySimpleInfo);
