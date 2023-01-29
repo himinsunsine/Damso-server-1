@@ -8,9 +8,9 @@ const { response, errResponse } = require("../../../config/response");
  * API Name : 테스트 API
  * [GET] /main
  */
-exports.getTest = async function (req, res) {
-  return res.send(response(baseResponse.SUCCESS));
-};
+// exports.getTest = async function (req, res) {
+//   return res.send(response(baseResponse.SUCCESS));
+// };
 
 /**
  * API No. 1-1
