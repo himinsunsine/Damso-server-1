@@ -53,7 +53,7 @@ exports.postUserImage = async function(req, res){
     return res.send(UserImageResponse);
 }
 /**
- * API No. 1-4
+ * API No. 5-3
  * API Name : 내 닉네임 수정 API
  * [POST] /main/profile/{user_id}/nickname
  */
@@ -65,4 +65,15 @@ exports.postUserNickname = async function(req, res){
     const UserNicknameResponse = await userService.postUserNickname(nickname, userid, name);
 
     return res.send(UserNicknameResponse);
+}
+/**
+ * API No. 5-4
+ * API Name : 탈퇴 API
+ * [POST] /main/profile/:userid/setting/resign
+ */
+exports.postUserResign = async function(req, res){
+    const userid = req.params.userid;
+    
+    const UserResignResponse = await userService.postResign(userid);
+    return res.send(UserResignResponse);
 }

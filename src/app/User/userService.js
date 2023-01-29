@@ -46,3 +46,19 @@ exports.postUserNickname = async function(nickname,userid,name){
         return errResponse(baseResponse.DB_ERROR);
     }
 }
+exports.postResign = async function(userid){
+    try{
+        const connection = await pool.getConnection(async (conn)=> conn);
+        const editStatus = await userDao.updateUserStatus(connection,userid);
+        
+        console.log(`${userid}의 탈퇴 처리 완료`);
+        connection.release();
+
+        return response(baseResponse.SUCCESS);
+    
+    }
+    catch(err){
+        logger.error(`App - editStatus Service error\n: ${err.message}`);
+        return errResponse(baseResponse.DB_ERROR);
+    }
+}
