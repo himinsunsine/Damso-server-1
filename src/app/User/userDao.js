@@ -19,12 +19,12 @@ async function selectUserId(connection, userid) {
   return userRow;
 }
 
-//1. 내 정보
+//5. 내 정보
 
 //내 정보 조회 --ok
 async function selectUserInfo(connection, userid) {
   const selectUserListQuery = `
-        SELECT user_id, name, nickname, profile 
+        SELECT user_id, name, nickname, profile, status
         from user 
         where user_id=?;
     `;
@@ -34,15 +34,24 @@ async function selectUserInfo(connection, userid) {
 
 //설정 - 문의
 
-//설정 -  이용약관 조회
+//설정 - 이용약관 조회
 
 //설정 - 개인정보 처리방침 조회
 
 //설정 - 회원 탈퇴
+async function updateUserStatus(connection, userid) {
+  const updateStatusQuery = `
+        UPDATE user
+        SET status = 'resign'
+        WHERE user_id=?;
+    `;
+  const resignUserRow = await connection.query(updateStatusQuery, userid);
+  return resignUserRow;
+}
 
 //내 제보 현황 조회
 
-//내 정보 수정 - 이미지
+//내 정보 수정 - 이미지 --ok
 async function updateUserImage(connection, newparams) {
   const updateUserQuery = `
         UPDATE user 
@@ -52,18 +61,18 @@ async function updateUserImage(connection, newparams) {
   const updateUserRow = await connection.query(updateUserQuery, newparams);
   return updateUserRow;
 }
-//내 정보 수정 - 닉네임
-// async function updateUserNickname(connection, userid){
-//     const updateUserQuery = `
-//         UPDATE user
-//         SET nickname = ?
-//         WHERE user_id = ?;
-//     `;
-//     const updateUserRow = await connection.query(updateUserQuery, userid);
-//     return updateUserRow[0];
-// }
+//내 정보 수정 - 닉네임 --ok
+async function updateUserNickname(connection, newparams) {
+  const updateUserQuery = `
+        UPDATE user 
+        SET nickname = ? 
+        WHERE user_id = ?;
+    `;
+  const updateUserRow = await connection.query(updateUserQuery, newparams);
+  return updateUserRow;
+}
 
-//2. 즐겨찾기
+//3. 즐겨찾기
 
 //즐겨찾기 조회 --ok
 
@@ -78,14 +87,13 @@ async function selectBookmark(connection, userid) {
 }
 
 //시설 클릭
+// async function selectFacility(connection, la, lo){
+//     const selectFacilityquery = `
 
-async function selectFacility(connection, la, lo) {
-  const selectFacilityquery = `
-        
-    `;
-  const selectFacility = await connection.query(updateUserQuery, la, lo);
-  return selectFacility[0];
-}
+//     `;
+//     const selectFacility = await connection.query(updateUserQuery, la, lo);
+//     return selectFacility[0];
+// }
 
 // 1-2. 흡연구역 간단 조회
 async function selectFacilityInfo(connection, facilityid) {
@@ -100,6 +108,7 @@ async function selectFacilityInfo(connection, facilityid) {
   );
   return checkFacilitySimpleInfo;
 }
+
 // 1-3. 흡연구역 상세 조회
 async function selectFacilityDetailInfo(connection, facilityid) {
   //흡연구역 상세정보 select
@@ -152,9 +161,10 @@ async function selectFacilityDetailInfo(connection, facilityid) {
 
 module.exports = {
   selectBookmark,
-  //updateUserNickname,
+  updateUserNickname,
   updateUserImage,
   selectUserInfo,
+  updateUserStatus,
   selectFacilityInfo,
   selectFacilityDetailInfo,
 };
