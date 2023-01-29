@@ -4,12 +4,6 @@ module.exports = function (app) {
   // 0. 테스트 api
   //app.get("/main", user.getTest);
 
-  //1-2. 흡연구역 간단 조회 api
-  app.get("/main/facility/simple/:facilityid", user.getFacilitySimpleInfo);
-
-  //1-3. 흡연구역 상세 조회 api
-  app.get("/main/facility/detail/:facilityid", user.getFacilityDetailInfo);
-
   //3-1. 즐겨찾기 조회 api
   app.get("/main/heart/:userid", user.getBookmark);
 

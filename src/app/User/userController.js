@@ -80,27 +80,3 @@ exports.postUserResign = async function (req, res) {
   const UserResignResponse = await userService.postResign(userid);
   return res.send(UserResignResponse);
 };
-
-/**
- * API No. 1-2
- * API Name : 흡연구역 간단 조회 API
- * [GET] /main/facility/simple/{facility_id}
- */
-exports.getFacilitySimpleInfo = async function (req, res) {
-  const facilityid = req.params.facilityid;
-
-  const facilityInfo = await userProvider.retrieveFacility(facilityid);
-  return res.send(response(baseResponse.SUCCESS, facilityInfo));
-};
-
-/**
- * API No. 1-3
- * API Name : 흡연구역 상세 조회 API
- * [GET] /main/facility/detail/{facility_id}
- */
-exports.getFacilityDetailInfo = async function (req, res) {
-  const facilityid = req.params.facilityid;
-
-  const facilityInfo = await userProvider.retrieveFacilityDetail(facilityid);
-  return res.send(response(baseResponse.SUCCESS, facilityInfo));
-};
