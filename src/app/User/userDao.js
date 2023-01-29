@@ -138,10 +138,10 @@ async function selectFacilityDetailInfo(connection, facilityid) {
   const reviews = [];
   for (let i = 0; i < selectReview.length; i++) {
     let j = {
-      nickname: selectReview[0].nickname,
-      profileImg: selectReview[0].profile,
-      content: selectReview[0].content,
-      rating: selectReview[0].rating,
+      nickname: selectReview[i].nickname,
+      profileImg: selectReview[i].profile,
+      content: selectReview[i].content,
+      rating: selectReview[i].rating,
     };
     reviews.push(j);
   }
