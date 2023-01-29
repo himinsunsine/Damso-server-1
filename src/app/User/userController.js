@@ -63,3 +63,15 @@ exports.getFacilitySimpleInfo = async function (req, res) {
   const facilityInfo = await userProvider.retrieveFacility(facilityid);
   return res.send(response(baseResponse.SUCCESS, facilityInfo));
 };
+
+/**
+ * API No. 1-3
+ * API Name : 흡연구역 상세 조회 API
+ * [GET] /main/facility/detail/{facility_id}
+ */
+exports.getFacilityDetailInfo = async function (req, res) {
+  const facilityid = req.params.facilityid;
+
+  const facilityInfo = await userProvider.retrieveFacilityDetail(facilityid);
+  return res.send(response(baseResponse.SUCCESS, facilityInfo));
+};

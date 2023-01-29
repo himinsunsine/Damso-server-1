@@ -24,3 +24,10 @@ exports.retrieveFacility = async function (facilityid) {
   connection.release();
   return result;
 };
+exports.retrieveFacilityDetail = async function (facilityid) {
+  const connection = await pool.getConnection(async (conn) => conn);
+  const result = await userDao.selectFacilityDetailInfo(connection, facilityid);
+
+  connection.release();
+  return result;
+};

@@ -20,5 +20,5 @@ module.exports = function (app) {
   app.get("/main/facility/simple/:facilityid", user.getFacilitySimpleInfo);
 
   // 1-3. 흡연구역 상세 조회 api
-  // app.get("/main/facility/detail/:facility_id", user.getFacilityDetailInfo);
+  app.get("/main/facility/detail/:facilityid", user.getFacilityDetailInfo);
 };
