@@ -19,12 +19,12 @@ async function selectUserId(connection, userid) {
     return userRow;
 }
 
-//1-1. 내 정보
+//5. 내 정보
 
 //내 정보 조회 --ok
 async function selectUserInfo(connection, userid){
     const selectUserListQuery = `
-        SELECT user_id, name, nickname, profile 
+        SELECT user_id, name, nickname, profile, status
         from user 
         where user_id=?;
     `;
@@ -39,6 +39,15 @@ async function selectUserInfo(connection, userid){
 //설정 - 개인정보 처리방침 조회
 
 //설정 - 회원 탈퇴
+async function updateUserStatus(connection, userid){
+    const updateStatusQuery = `
+        UPDATE user
+        SET status = 'resign'
+        WHERE user_id=?;
+    `;
+    const resignUserRow = await connection.query(updateStatusQuery, userid);
+    return resignUserRow;
+}
 
 //내 제보 현황 조회
 
@@ -63,7 +72,7 @@ async function updateUserNickname(connection, newparams){
     return updateUserRow;
 }
 
-//1-2. 즐겨찾기
+//3. 즐겨찾기
 
 //즐겨찾기 조회 --ok
 
@@ -92,4 +101,5 @@ module.exports ={
     updateUserNickname,
     updateUserImage,
     selectUserInfo,
+    updateUserStatus,
 };
