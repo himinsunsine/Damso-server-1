@@ -7,6 +7,9 @@ module.exports = function (app) {
   //3-1. 즐겨찾기 조회 api
   app.get("/main/heart/:userid", user.getBookmark);
 
+  // 2-3. 시설 제보
+  app.post("/main/facility/register", user.postFacilityRegister);
+
   //5-1. 내 정보 조회 api
   app.get("/main/profile/:userid", user.getUserInfo);
 
