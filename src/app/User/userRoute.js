@@ -2,6 +2,7 @@ module.exports = function (app) {
   const user = require("./userController");
 
   // 0. 테스트 api
+
   app.get("/main", user.getTest);
 
   //1-2. 흡연구역 간단 조회 api
@@ -13,8 +14,12 @@ module.exports = function (app) {
   // 2-3. 시설 제보
   app.post("/main/facility/register", user.postFacilityRegister);
 
+
   //3-1. 즐겨찾기 조회 api
   app.get("/main/heart/:userid", user.getBookmark);
+
+  // 2-3. 시설 제보
+  app.post("/main/facility/register", user.postFacilityRegister);
 
   //5-1. 내 정보 조회 api
   app.get("/main/profile/:userid", user.getUserInfo);

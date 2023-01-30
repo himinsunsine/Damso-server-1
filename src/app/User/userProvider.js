@@ -17,6 +17,8 @@ exports.retrieveUser = async function (userid) {
   connection.release();
   return result;
 };
+
+
 exports.retrieveFacility = async function (facilityid) {
   const connection = await pool.getConnection(async (conn) => conn);
   const result = await userDao.selectFacilityInfo(connection, facilityid);
@@ -24,6 +26,7 @@ exports.retrieveFacility = async function (facilityid) {
   connection.release();
   return result;
 };
+
 exports.retrieveFacilityDetail = async function (facilityid) {
   const connection = await pool.getConnection(async (conn) => conn);
   const result = await userDao.selectFacilityDetailInfo(connection, facilityid);
@@ -32,13 +35,6 @@ exports.retrieveFacilityDetail = async function (facilityid) {
   return result;
 };
 
-exports.retrieveFacility = async function (facilityid) {
-  const connection = await pool.getConnection(async (conn) => conn);
-  const result = await userDao.selectFacilityInfo(connection, facilityid);
-
-  connection.release();
-  return result;
-};
 
 exports.locationCheck = async function (location) {
   const connection = await pool.getConnection(async (conn) => conn);

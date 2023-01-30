@@ -86,6 +86,7 @@ async function selectBookmark(connection, userid) {
   return checkBookmark;
 }
 
+
 //시설 클릭
 // async function selectFacility(connection, la, lo){
 //     const selectFacilityquery = `
@@ -185,6 +186,7 @@ async function insertFacilInfo(connection, insertFacilInfoParams) {
     return insertFacilInfoRow;
 }
 
+
 module.exports = {
   selectBookmark,
   updateUserNickname,
@@ -195,4 +197,6 @@ module.exports = {
   selectFacilityDetailInfo,
   insertFacilInfo,
   selectFacilLocation,
+  selectFacilLocation,
+  insertFacilInfo,
 };

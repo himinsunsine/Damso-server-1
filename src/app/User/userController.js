@@ -8,9 +8,11 @@ const { response, errResponse } = require("../../../config/response");
  * API Name : 테스트 API
  * [GET] /main
  */
-exports.getTest = async function (req, res) {
-  return res.send(response(baseResponse.SUCCESS));
-};
+
+// exports.getTest = async function (req, res) {
+//   return res.send(response(baseResponse.SUCCESS));
+// };
+
 
 /**
  * API No. 1-1
@@ -51,6 +53,35 @@ exports.postUserImage = async function (req, res) {
 
   return res.send(UserImageResponse);
 };
+
+/**
+ * API No. 2-3
+ * API Name : 시설 제보
+ * [POST] /main/facility/register
+ */  
+ exports.postFacilityRegister = async function (req, res) {
+  /**
+   * Body; location, title, type, installAgency, img
+   */
+  const {location, title, type, installAgency, img} = req.body;
+
+  // 빈 값 체크
+  if (!location)
+      return res.send(response(baseResponse.REGISTER_LOCATION_EMPTY));
+  
+
+  const registerResponse = await userService.registerFacility(
+      location,
+      title,
+      type,
+      installAgency,
+      img
+    );
+ 
+  return res.send(registerResponse);
+};
+
+
 /**
  * API No. 5-3
  * API Name : 내 닉네임 수정 API
@@ -66,9 +97,21 @@ exports.postUserNickname = async function (req, res) {
     userid,
     name
   );
-
   return res.send(UserNicknameResponse);
 };
+
+/**
+ * API No. 5-4
+ * API Name : 탈퇴 API
+ * [POST] /main/profile/:userid/setting/resign
+ */
+exports.postUserResign = async function (req, res) {
+  const userid = req.params.userid;
+
+  const UserResignResponse = await userService.postResign(userid);
+  return res.send(UserResignResponse);
+};
+
 /**
  * API No. 5-4
  * API Name : 탈퇴 API
@@ -131,4 +174,4 @@ exports.postFacilityRegister = async function (req, res) {
     );
  
   return res.send(registerResponse);
-};
+  };

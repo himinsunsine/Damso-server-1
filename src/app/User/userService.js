@@ -84,4 +84,6 @@ exports.registerFacility = async function (location, title, type, installAgency,
         logger.error(`App - registerFacility Service error\n: ${err.message}`);
         return errResponse(baseResponse.DB_ERROR);
     }
+
 }
+
