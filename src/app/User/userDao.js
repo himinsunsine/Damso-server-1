@@ -80,7 +80,8 @@ async function selectBookmark(connection, userid) {
   const selectBookmarkquery = `
     select user_id, id, f.facility_id, title, location, img, rating 
     from bookmark 
-    inner join facility f on bookmark.facility_id = f.facility_id;
+    inner join facility f on bookmark.facility_id = f.facility_id
+    where user_id=?;
     `;
   const [checkBookmark] = await connection.query(selectBookmarkquery, userid);
   return checkBookmark;

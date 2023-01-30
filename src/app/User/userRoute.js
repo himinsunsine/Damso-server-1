@@ -1,4 +1,20 @@
 module.exports = function (app) {
+  const fileUpload = require('express-fileupload');
+  const bodyParser = require('body-parser');
+  const cors = require('cors');
+  const morgan = require('morgan')
+  const _ = require('lodash')
+// 파일 업로드 허용
+  app.use(fileUpload({
+    createParentPath: true
+  }));
+
+  // 미들 웨어 추가
+  app.use(cors());
+  app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded({extended:true}));
+  app.use(morgan('dev'));
+
   const user = require("./userController");
 
   // 0. 테스트 api

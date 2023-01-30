@@ -44,12 +44,23 @@ exports.getUserInfo = async function (req, res) {
  * [POST] /main/profile/{user_id}/image
  */
 exports.postUserImage = async function (req, res) {
-  const profile = req.body.profile;
+
   const userid = req.params.userid;
+  //const profile = req.body.profile;
 
-  const UserImageResponse = await userService.postUserImage(profile, userid);
+  if(!req.files.uploadFile){
+    return res.send({
+      status : false,
+      message : '파일 업로드 실패'
+    });
+  } else{
+    let profile = req.files.uploadFile; 
+    //console.log(profile);
+    const UserImageResponse = await userService.postUserImage(profile.name, userid);
+    return res.send(UserImageResponse);
+  }
 
-  return res.send(UserImageResponse);
+  
 };
 
 /**
