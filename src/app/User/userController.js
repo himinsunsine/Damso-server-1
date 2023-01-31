@@ -55,7 +55,15 @@ exports.postUserImage = async function (req, res) {
     });
   } else{
     let profile = req.files.uploadFile; 
+    //let profile = [];
+    //profile.push({
+    //   name: profile.name,
+    //   minetype: profile.minetype,
+    //   size : profile.size
+    //});
+
     //console.log(profile);
+    profile.mv('./upload/'+profile.name);
     const UserImageResponse = await userService.postUserImage(profile.name, userid);
     return res.send(UserImageResponse);
   }
