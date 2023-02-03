@@ -51,7 +51,8 @@ exports.getUserInfo = async function (req, res) {
     //   console.log(data); 
     //   }
     // )
-    return res.send(response(baseResponse.SUCCESS, userInfo));
+    const result = [userInfo, data];
+    return res.send(response(baseResponse.SUCCESS, result));
     }
   
 };
