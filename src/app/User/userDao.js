@@ -28,8 +28,8 @@ async function selectUserInfo(connection, userid) {
         from user 
         where user_id=?;
     `;
-  const [userInfoRows] = await connection.query(selectUserListQuery, userid);
-  return userInfoRows;
+  const userInfoRows = await connection.query(selectUserListQuery, userid);
+  return userInfoRows[0];
 }
 
 //설정 - 문의
@@ -54,8 +54,8 @@ async function updateUserStatus(connection, userid) {
 //내 정보 수정 - 이미지 --ok
 async function updateUserImage(connection, newparams) {
   const updateUserQuery = `
-        UPDATE user 
-        SET profile = ? 
+        UPDATE user
+        SET profile =?
         WHERE user_id = ?;
     `;
   const updateUserRow = await connection.query(updateUserQuery, newparams);
@@ -112,6 +112,19 @@ async function insertFacilInfo(connection, insertFacilInfoParams) {
     return insertFacilInfoRow;
 }
 
+async function selectFacilityRegisted(connection, userid){
+  const selectFacilityRegistedQuery = `
+    select facility_id, title, location, img, type, installAgency
+    from facility
+    where user_id=?;
+  `;
+  const [facilityRegisteredRow] = await connection.query(
+    selectFacilityRegistedQuery,
+    userid
+  );
+  return facilityRegisteredRow;
+}
+
 module.exports = {
   selectBookmark,
   updateUserNickname,
@@ -120,4 +133,5 @@ module.exports = {
   updateUserStatus,
   selectFacilLocation,
   insertFacilInfo,
+  selectFacilityRegisted,
 };
