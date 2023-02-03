@@ -6,4 +6,7 @@ module.exports = function (app) {
 
   //1-3. 흡연구역 상세 조회 api
   app.get("/main/facility/detail/:facilityid", facility.getFacilityDetailInfo);
+
+  //1-4. 흡연구역 상세 조회에서 북마크 추가 api
+  app.post("/main/facility/detail/:facilityid", facility.postFacilityBookmark);
 };

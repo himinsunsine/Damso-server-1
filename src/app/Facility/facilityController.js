@@ -1,5 +1,5 @@
 const facilityProvider = require("./facilityProvider.js");
-// const facilityService = require("../Facility/facilityService");
+const facilityService = require("../Facility/facilityService");
 const baseResponse = require("../../../config/baseResponseStatus");
 const { response, errResponse } = require("../../../config/response");
 
@@ -28,3 +28,20 @@ exports.getFacilityDetailInfo = async function (req, res) {
   );
   return res.send(response(baseResponse.SUCCESS, facilityInfo));
 };
+
+/**
+ * API No. 1-4
+ * API Name : 흡연구역 상세 조회에서 북마크 추가 API
+ * [POST] /main/facility/detail/{facility_id}
+ */
+exports.postFacilityBookmark = async function (req, res) {
+  const facilityid = req.params.facilityid;
+  const userid = req.body.userid;
+
+  const setFacilityBookmark = await facilityService.retrieveBookmark(
+    facilityid,
+    userid
+  );
+  return res.send(response(baseResponse.SUCCESS, setFacilityBookmark));
+
+}

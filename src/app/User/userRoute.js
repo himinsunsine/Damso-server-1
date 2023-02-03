@@ -4,7 +4,7 @@ module.exports = function (app) {
   const cors = require('cors');
   const morgan = require('morgan')
   const _ = require('lodash')
-// 파일 업로드 허용
+  // 파일 업로드 허용
   app.use(fileUpload({
     createParentPath: true
   }));
@@ -37,4 +37,7 @@ module.exports = function (app) {
 
   //5-4. 탈퇴 api
   app.post("/main/profile/:userid/setting/resign", user.postUserResign);
+
+  //5-5 내 제보 현황 조회 api
+  app.get("/main/facility/register/:userid", user.getFacilityRegister);
 };
