@@ -1,19 +1,21 @@
 module.exports = function (app) {
-  const fileUpload = require('express-fileupload');
-  const bodyParser = require('body-parser');
-  const cors = require('cors');
-  const morgan = require('morgan')
-  const _ = require('lodash')
+  const fileUpload = require("express-fileupload");
+  const bodyParser = require("body-parser");
+  const cors = require("cors");
+  const morgan = require("morgan");
+  const _ = require("lodash");
   // 파일 업로드 허용
-  app.use(fileUpload({
-    createParentPath: true
-  }));
+  app.use(
+    fileUpload({
+      createParentPath: true,
+    })
+  );
 
   // 미들 웨어 추가
   app.use(cors());
   app.use(bodyParser.json());
-  app.use(bodyParser.urlencoded({extended:true}));
-  app.use(morgan('dev'));
+  app.use(bodyParser.urlencoded({ extended: true }));
+  app.use(morgan("dev"));
 
   const user = require("./userController");
 
@@ -25,6 +27,9 @@ module.exports = function (app) {
 
   // 2-3. 시설 제보
   app.post("/main/facility/register", user.postFacilityRegister);
+
+  // 4-4. 로그인 콜백 api (회원가입)
+  app.get("/naver/callback", user.naverSignUp);
 
   //5-1. 내 정보 조회 api
   app.get("/main/profile/:userid", user.getUserInfo);

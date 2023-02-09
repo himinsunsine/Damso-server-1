@@ -2,8 +2,7 @@ const userProvider = require("../../app/User/userProvider");
 const userService = require("../../app/User/userService");
 const baseResponse = require("../../../config/baseResponseStatus");
 const { response, errResponse } = require("../../../config/response");
-const fs = require('fs');
-
+const fs = require("fs");
 
 /**
  * API No. 0
@@ -36,25 +35,23 @@ exports.getBookmark = async function (req, res) {
  */
 exports.getUserInfo = async function (req, res) {
   const userid = req.params.userid;
-  if(!userid){
+  if (!userid) {
     return res.send(errResponse(baseResponse.USER_ID_NOT_MATCH_IN_PROFILE));
-
-  }else{
+  } else {
     const userInfo = await userProvider.retrieveUser(userid);
     console.log(userInfo[0].profile);
-    
-    var fileName= `./upload/${userInfo[0].profile}`;
+
+    var fileName = `./upload/${userInfo[0].profile}`;
     const data = fs.readFileSync(fileName);
     console.log(data);
 
     // fs.readFile(`'./upload/'${userInfo[0].profile}`,function (err, data){
-    //   console.log(data); 
+    //   console.log(data);
     //   }
     // )
     const result = [userInfo, data];
     return res.send(response(baseResponse.SUCCESS, result));
-    }
-  
+  }
 };
 
 /**
@@ -63,54 +60,66 @@ exports.getUserInfo = async function (req, res) {
  * [POST] /main/profile/{user_id}/image
  */
 exports.postUserImage = async function (req, res) {
-
   const userid = req.params.userid;
   //const profile = req.body.profile;
 
-  if(!req.files.uploadFile){
+  if (!req.files.uploadFile) {
     return res.send({
-      status : false,
-      message : '파일 업로드 실패'
+      status: false,
+      message: "파일 업로드 실패",
     });
-  } else{
-    let profile = req.files.uploadFile; 
-    
+  } else {
+    let profile = req.files.uploadFile;
+
     console.log(profile);
-    profile.mv('./upload/'+profile.name);
-    const UserImageResponse = await userService.postUserImage(profile.name, userid);
+    profile.mv("./upload/" + profile.name);
+    const UserImageResponse = await userService.postUserImage(
+      profile.name,
+      userid
+    );
     return res.send(UserImageResponse);
   }
-
-
 };
 
 /**
  * API No. 2-3
  * API Name : 시설 제보
  * [POST] /main/facility/register
- */  
- exports.postFacilityRegister = async function (req, res) {
+ */
+exports.postFacilityRegister = async function (req, res) {
   /**
    * Body; location, title, type, installAgency, img
    */
-  const {location, title, type, installAgency, img} = req.body;
+  const { location, title, type, installAgency, img } = req.body;
 
   // 빈 값 체크
   if (!location)
-      return res.send(response(baseResponse.REGISTER_LOCATION_EMPTY));
-  
+    return res.send(response(baseResponse.REGISTER_LOCATION_EMPTY));
 
   const registerResponse = await userService.registerFacility(
-      location,
-      title,
-      type,
-      installAgency,
-      img
-    );
- 
+    location,
+    title,
+    type,
+    installAgency,
+    img
+  );
+
   return res.send(registerResponse);
 };
+/**
+ * API No. 4-4
+ * API Name : 로그인 콜백 API (회원가입)
+ * [GET] /naver/callback
+ */
+exports.naverSignUp = async function (req, res) {
+  const userid = req.params.userid;
 
+  if (!userid) {
+    return res.send(errResponse(baseResponse.USER_ID_NOT_MATCH_IN_BOOKMARK));
+  }
+  const userBookmark = await userProvider.retrieveBookmark(userid);
+  return res.send(response(baseResponse.SUCCESS, userBookmark));
+};
 
 /**
  * API No. 5-3
@@ -147,10 +156,9 @@ exports.postUserResign = async function (req, res) {
  * API Name : 내 제보 현황 조회 API
  * [GET] /main/facility/register/:userid
  */
-exports.getFacilityRegister = async function(req, res){
+exports.getFacilityRegister = async function (req, res) {
   const userid = req.params.userid;
 
   const UserRegisterResponse = await userProvider.getRegistered(userid);
   return res.send(response(baseResponse.SUCCESS, UserRegisterResponse));
-}
-
+};
