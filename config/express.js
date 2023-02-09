@@ -21,7 +21,7 @@ module.exports = function () {
   require("../src/app/User/userRoute")(app);
   require("../src/app/map/mapRoute")(app);
   require("../src/app/Facility/facilityRoute")(app);
-  // require('../src/app/Board/boardRoute')(app);
+  //require('../src/app/Login/login')(app);
 
   return app;
 };

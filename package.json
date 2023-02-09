@@ -16,5 +16,9 @@
     "passport-naver-v2": "^2.0.8",
     "pool": "^0.4.1",
     "winston-daily-rotate-file": "^4.7.1"
+    
+  },
+  "scripts":{
+    "start":"node index.js"
   }
 }
