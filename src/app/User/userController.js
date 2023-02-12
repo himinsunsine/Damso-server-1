@@ -106,20 +106,6 @@ exports.postFacilityRegister = async function (req, res) {
 
   return res.send(registerResponse);
 };
-/**
- * API No. 4-4
- * API Name : 로그인 콜백 API (회원가입)
- * [GET] /naver/callback
- */
-exports.naverSignUp = async function (req, res) {
-  const userid = req.params.userid;
-
-  if (!userid) {
-    return res.send(errResponse(baseResponse.USER_ID_NOT_MATCH_IN_BOOKMARK));
-  }
-  const userBookmark = await userProvider.retrieveBookmark(userid);
-  return res.send(response(baseResponse.SUCCESS, userBookmark));
-};
 
 /**
  * API No. 5-3

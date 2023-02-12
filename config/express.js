@@ -2,6 +2,8 @@ const express = require("express");
 const compression = require("compression");
 const methodOverride = require("method-override");
 var cors = require("cors");
+const { json } = require("body-parser");
+const bodyParser = require("body-parser");
 module.exports = function () {
   const app = express();
 
@@ -21,7 +23,7 @@ module.exports = function () {
   require("../src/app/User/userRoute")(app);
   require("../src/app/map/mapRoute")(app);
   require("../src/app/Facility/facilityRoute")(app);
-  //require('../src/app/Login/login')(app);
+  require("../src/app/Login/naverLogin")(app);
 
   return app;
 };

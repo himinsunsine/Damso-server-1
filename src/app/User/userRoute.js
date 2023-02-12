@@ -28,9 +28,6 @@ module.exports = function (app) {
   // 2-3. 시설 제보
   app.post("/main/facility/register", user.postFacilityRegister);
 
-  // 4-4. 로그인 콜백 api (회원가입)
-  app.get("/naver/callback", user.naverSignUp);
-
   //5-1. 내 정보 조회 api
   app.get("/main/profile/:userid", user.getUserInfo);
 

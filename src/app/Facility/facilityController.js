@@ -12,6 +12,8 @@ exports.getFacilitySimpleInfo = async function (req, res) {
   const facilityid = req.params.facilityid;
 
   const facilityInfo = await facilityProvider.retrieveFacility(facilityid);
+  console.log(facilityInfo);
+
   return res.send(response(baseResponse.SUCCESS, facilityInfo));
 };
 
@@ -43,5 +45,4 @@ exports.postFacilityBookmark = async function (req, res) {
     userid
   );
   return res.send(response(baseResponse.SUCCESS, setFacilityBookmark));
-
-}
+};

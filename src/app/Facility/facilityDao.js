@@ -62,21 +62,17 @@ async function selectFacilityDetailInfo(connection, facilityid) {
   return checkFacilityDetailInfo;
 }
 
-// 1-4. 흡연구역 상세 조회에서 북마크 추가 
-async function insertBookmark(connection, newparams){
+// 1-4. 흡연구역 상세 조회에서 북마크 추가
+async function insertBookmark(connection, newparams) {
   const insertBookmarkQuery = `
     insert into bookmark(facility_id, user_id) values(?,?);
   `;
-  const insertBookmark = await connection.query(
-    insertBookmarkQuery,
-    newparams
-  );
+  const insertBookmark = await connection.query(insertBookmarkQuery, newparams);
   return insertBookmark;
-
 }
 
 module.exports = {
   selectFacilityInfo,
   selectFacilityDetailInfo,
-  insertBookmark
+  insertBookmark,
 };
