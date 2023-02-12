@@ -40,12 +40,12 @@ exports.naverLogin = async function (
     const result = await loginDao.getUserId(connection, insertUserData);
 
     connection.release();
-    return response(baseResponse.SUCCESS, result);
+    return response(baseResponse.SIGNUP, result);
   } else if (emailCheck.length == 1) {
     // 이미 DB에 있는 유저라면 유저ID만 리턴
     const result = await loginDao.getUserId(connection, insertUserData);
     connection.release();
-    return response(baseResponse.SUCCESS, result);
+    return response(baseResponse.SIGNIN, result);
   } else {
     return errResponse(baseResponse.SIGNIN_ERROR);
   }
