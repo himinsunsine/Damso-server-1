@@ -13,6 +13,8 @@ module.exports = function (app) {
   var redirectURI = encodeURI("http://localhost:3000/callback");
   var api_url = "";
   var userData = {};
+  // 프론트에서 처리하는 곳인데 일단 작성함
+  // 네이버 로그인 요청 api
   app.get("/naverlogin", function (req, res) {
     api_url =
       "https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=" +
@@ -28,6 +30,7 @@ module.exports = function (app) {
         "'><img height='50' src='http://static.nid.naver.com/oauth/small_g_in.PNG'/></a>"
     );
   });
+  // 위에 요청하면 자동으로 요청됨
   app.get("/callback", function (req, res) {
     code = req.query.code;
     state = req.query.state;
@@ -60,6 +63,8 @@ module.exports = function (app) {
       }
     });
   });
+  // 회원가입 API (프론트한테 액세스토큰 헤더로 받아야 됨)
+  // 유저 정보 받아서 DB 저장 후 userId 리턴
   app.get("/member", function (req, res) {
     var api_url = "https://openapi.naver.com/v1/nid/me";
     var request = require("request");
