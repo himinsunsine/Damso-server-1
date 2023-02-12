@@ -66,7 +66,7 @@ async function updateUserNickname(connection, newparams) {
   const updateUserQuery = `
         UPDATE user 
         SET nickname = ? 
-        WHERE user_id = ?;
+        WHERE location = ?;
     `;
   const updateUserRow = await connection.query(updateUserQuery, newparams);
   return updateUserRow;
@@ -87,30 +87,9 @@ async function selectBookmark(connection, userid) {
   return checkBookmark;
 }
 
-// 위치로 시설 조회
-async function selectFacilLocation(connection, location) {
-  const selectFacilLocationQuery = `
-    SELECT location, title
-    FROM facility
-    WHERE location = ?;
-    `;
-  const [locationRows] = await connection.query(selectFacilLocationQuery, location);
-  return locationRows;  
-}
 
-async function insertFacilInfo(connection, insertFacilInfoParams) {
-  // 좌표 삽입 값 삽입 필요 (현재는 테이블에 위치만 삽입)
-  const insertFacilInfoQuery = `
-      INSERT INTO facility(location, title, type, installAgency, img, report, createdAt, updatedAt, status)
-      VALUES (?, ?, ?, ?, ?, 1, NOW(), NOW(), 1);
-    `;
-  const insertFacilInfoRow = await connection.query(
-      insertFacilInfoQuery,
-      insertFacilInfoParams
-    );
-    
-    return insertFacilInfoRow;
-}
+
+
 
 module.exports = {
   selectBookmark,
@@ -118,6 +97,4 @@ module.exports = {
   updateUserImage,
   selectUserInfo,
   updateUserStatus,
-  selectFacilLocation,
-  insertFacilInfo,
 };

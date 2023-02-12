@@ -10,6 +10,8 @@ exports.retrieveFacility = async function (facilityid) {
   connection.release();
   return result;
 };
+
+
 exports.retrieveFacilityDetail = async function (facilityid) {
   const connection = await pool.getConnection(async (conn) => conn);
   const result = await facilityDao.selectFacilityDetailInfo(
@@ -19,4 +21,13 @@ exports.retrieveFacilityDetail = async function (facilityid) {
 
   connection.release();
   return result;
+};
+
+
+exports.locationCheck = async function (location) {
+  const connection = await pool.getConnection(async (conn) => conn);
+  const locationCheckResult = await facilityDao.selectFacilLocation(connection, location);
+  connection.release();
+
+  return locationCheckResult;
 };

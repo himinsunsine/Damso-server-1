@@ -62,24 +62,3 @@ exports.postResign = async function(userid){
         return errResponse(baseResponse.DB_ERROR);
     }
 }
-
-exports.registerFacility = async function (location, title, type, installAgency, img) {
-    try {
-        // 시설 중복 확인
-        const locationRows = await userProvider.locationCheck(location);
-        if (locationRows.length > 0)
-            return errResponse(baseResponse.REGISTER_REDUNDANT_LOCATION);
-
-        const insertFacilInfoParams = [location, title, type, installAgency, img];
-
-        const connection = await pool.getConnection(async (conn) => conn);
-
-        const facilResult = await userDao.insertFacilInfo(connection, insertFacilInfoParams);
-        connection.release();
-        return response(baseResponse.SUCCESS);
-
-    } catch (err) {
-        logger.error(`App - registerFacility Service error\n: ${err.message}`);
-        return errResponse(baseResponse.DB_ERROR);
-    }
-}

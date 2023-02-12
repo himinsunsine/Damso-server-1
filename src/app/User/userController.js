@@ -71,33 +71,6 @@ exports.postUserImage = async function (req, res) {
   
 };
 
-/**
- * API No. 2-3
- * API Name : 시설 제보
- * [POST] /main/facility/register
- */  
- exports.postFacilityRegister = async function (req, res) {
-  /**
-   * Body; location, title, type, installAgency, img
-   */
-  const {location, title, type, installAgency, img} = req.body;
-
-  // 빈 값 체크
-  if (!location)
-      return res.send(response(baseResponse.REGISTER_LOCATION_EMPTY));
-  
-
-  const registerResponse = await userService.registerFacility(
-      location,
-      title,
-      type,
-      installAgency,
-      img
-    );
- 
-  return res.send(registerResponse);
-};
-
 
 /**
  * API No. 5-3

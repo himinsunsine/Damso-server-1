@@ -62,7 +62,48 @@ async function selectFacilityDetailInfo(connection, facilityid) {
   return checkFacilityDetailInfo;
 }
 
+
+// 위치로 시설 조회
+async function selectFacilLocation(connection, location) {
+  const selectFacilLocationQuery = `
+    SELECT location, title
+    FROM facility
+    WHERE location = ?;
+    `;
+  const [locationRows] = await connection.query(selectFacilLocationQuery, location);
+  return locationRows;  
+}
+
+async function insertFacilInfo(connection, insertFacilInfoParams) {
+  const insertFacilInfoQuery = `
+      INSERT INTO facility(location, title, type, installAgency, la, lo, report, createdAt, updatedAt, status)
+      VALUES (?, ?, ?, ?, ?, ?, 1, NOW(), NOW(), 1);
+    `;
+  const insertFacilInfoRow = await connection.query(
+      insertFacilInfoQuery,
+      insertFacilInfoParams
+    );
+    
+    return insertFacilInfoRow;
+}
+
+//async function insertFacilInfoImgExist(connection, insertFacilInfoImgExistParams) {
+//  const insertFacilInfoImgExistQuery = `
+//      INSERT INTO facility(location, title, type, installAgency, la, lo, FacImg, report, createdAt, updatedAt, status)
+//      VALUES (?, ?, ?, ?, ?, ?, ?, 1, NOW(), NOW(), 1);
+//    `;
+//  const insertFacilInfoImgExistRow = await connection.query(
+//      insertFacilInfoImgExistQuery,
+//      insertFacilInfoImgExistParams
+//    );
+//    
+//    return insertFacilInfoImgExistRow;
+//}
+
 module.exports = {
   selectFacilityInfo,
   selectFacilityDetailInfo,
+  selectFacilLocation,
+  insertFacilInfo,
+  //insertFacilInfoImgExist,
 };
