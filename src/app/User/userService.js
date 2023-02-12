@@ -49,6 +49,14 @@ exports.postUserNickname = async function(nickname,userid,name){
 exports.postResign = async function(userid){
     try{
         const connection = await pool.getConnection(async (conn)=> conn);
+        //이미 탈퇴처리 되었는지 확인
+        const userStatus = await userDao.selectUserstatus(connection, userid);
+        console.log(userStatus);
+        if(userStatus[0].status =='resign'){
+            return errResponse(baseResponse.ALREADY_USER_RESIGN);
+        }
+
+        
         const editStatus = await userDao.updateUserStatus(connection,userid);
         
         console.log(`${userid}의 탈퇴 처리 완료`);

@@ -19,6 +19,17 @@ async function selectUserId(connection, userid) {
   return userRow;
 }
 
+// 회원 상태 조회
+async function selectUserstatus(connection, userid) {
+  const selectUserStatusQuery = `
+                   SELECT user_id, status 
+                   FROM user 
+                   WHERE user_id = ?;
+                   `;
+  const [userRow] = await connection.query(selectUserStatusQuery, userid);
+  return userRow;
+}
+
 //5. 내 정보
 
 //내 정보 조회 --ok
@@ -102,7 +113,7 @@ async function insertFacilInfo(connection, insertFacilInfoParams) {
   // 좌표 삽입 값 삽입 필요 (현재는 테이블에 위치만 삽입)
   const insertFacilInfoQuery = `
       INSERT INTO facility(location, title, type, installAgency, img, report, createdAt, updatedAt, status)
-      VALUES (?, ?, ?, ?, ?, 1, NOW(), NOW(), 1);
+      VALUES (?, ?, ?, ?, ?, 'Y', NOW(), NOW(), 1);
     `;
   const insertFacilInfoRow = await connection.query(
       insertFacilInfoQuery,
@@ -111,6 +122,7 @@ async function insertFacilInfo(connection, insertFacilInfoParams) {
     
     return insertFacilInfoRow;
 }
+
 
 async function selectFacilityRegisted(connection, userid){
   const selectFacilityRegistedQuery = `
@@ -134,4 +146,5 @@ module.exports = {
   selectFacilLocation,
   insertFacilInfo,
   selectFacilityRegisted,
+  selectUserstatus,
 };
