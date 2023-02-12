@@ -102,7 +102,7 @@ async function insertFacilInfo(connection, insertFacilInfoParams) {
   // 좌표 삽입 값 삽입 필요 (현재는 테이블에 위치만 삽입)
   const insertFacilInfoQuery = `
       INSERT INTO facility(location, title, type, installAgency, img, report, createdAt, updatedAt, status)
-      VALUES (?, ?, ?, ?, ?, 1, NOW(), NOW(), 1);
+      VALUES (?, ?, ?, ?, ?, Y, NOW(), NOW(), 1);
     `;
   const insertFacilInfoRow = await connection.query(
       insertFacilInfoQuery,
@@ -111,6 +111,7 @@ async function insertFacilInfo(connection, insertFacilInfoParams) {
     
     return insertFacilInfoRow;
 }
+
 
 async function selectFacilityRegisted(connection, userid){
   const selectFacilityRegistedQuery = `
