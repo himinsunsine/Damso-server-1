@@ -19,6 +19,17 @@ async function selectUserId(connection, userid) {
   return userRow;
 }
 
+// 회원 상태 조회
+async function selectUserstatus(connection, userid) {
+  const selectUserStatusQuery = `
+                   SELECT user_id, status 
+                   FROM user 
+                   WHERE user_id = ?;
+                   `;
+  const [userRow] = await connection.query(selectUserStatusQuery, userid);
+  return userRow;
+}
+
 //5. 내 정보
 
 //내 정보 조회 --ok
@@ -135,4 +146,5 @@ module.exports = {
   selectFacilLocation,
   insertFacilInfo,
   selectFacilityRegisted,
+  selectUserstatus,
 };
