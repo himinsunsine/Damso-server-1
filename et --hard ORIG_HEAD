@@ -1,0 +1,210 @@
+[1mdiff --cc config/baseResponseStatus.js[m
+[1mindex 212f5cf,425db61..0000000[m
+[1m--- a/config/baseResponseStatus.js[m
+[1m+++ b/config/baseResponseStatus.js[m
+[36m@@@ -1,15 -1,49 +1,62 @@@[m
+  module.exports = {[m
+[32m+   // Success[m
+[32m+   SUCCESS: { isSuccess: true, code: 1000, message: true },[m
+  [m
+[31m-     // Success[m
+[31m-     SUCCESS : {"isSuccess": true, "code":1000, "message": true},[m
+[32m+   // Success[m
+[32m+   SUCCESS: { isSuccess: true, code: 1000, message: true },[m
+  [m
+[32m++<<<<<<< HEAD[m
+[32m +    // Request Error[m
+[32m +    USER_ID_NOT_MATCH_IN_BOOKMARK :{"isSuccess": false, "code":4001, "message": "해당 id를 찾을 수 없습니다."},[m
+[32m +    NICKNAME_OVER_LENGTH : {"isSuccess": false, "code":3001, "message": "닉네임의 길이가 20자를 이상입니다."},[m
+[32m +    //Connection, Transaction 등의 서버 오류[m
+[32m +    DB_ERROR : { "isSuccess": false, "code": 4000, "message": "데이터 베이스 에러"},[m
+[32m +    SERVER_ERROR : { "isSuccess": false, "code": 4001, "message": "서버 에러"},[m
+[32m +    LOCATION_NULL_ERROR : { "isSuccess": false, "code": 3002, "message": "위치 정보를 입력해주세요"},[m
+[32m +    [m
+[32m + [m
+[31m- }[m
+[32m++}[m
+[32m++=======[m
+[32m+   SIGNUP: { isSuccess: true, code: 1001, message: "신규 유저 회원가입 성공" },[m
+[32m+   SIGNIN: { isSuccess: true, code: 1002, message: "기존 유저 로그인 성공" },[m
+[32m+ [m
+[32m+   // Request Error[m
+[32m+   USER_ID_NOT_MATCH_IN_BOOKMARK: {[m
+[32m+     isSuccess: false,[m
+[32m+     code: 3001,[m
+[32m+     message: "해당 id를 찾을 수 없습니다.",[m
+[32m+   },[m
+[32m+ [m
+[32m+   USER_ID_NOT_MATCH_IN_PROFILE: {[m
+[32m+     isSuccess: false,[m
+[32m+     code: 5001,[m
+[32m+     message: "해당 id를 찾을 수 없습니다.",[m
+[32m+   },[m
+[32m+   NICKNAME_OVER_LENGTH: {[m
+[32m+     isSuccess: false,[m
+[32m+     code: 5002,[m
+[32m+     message: "닉네임의 길이가 20자를 이상입니다.",[m
+[32m+   },[m
+[32m+   ALREADY_USER_RESIGN: {[m
+[32m+     isSuccess: false,[m
+[32m+     code: 5003,[m
+[32m+     message: "이미 탈퇴처리 되었습니다.",[m
+[32m+   },[m
+[32m+ [m
+[32m+   REGISTER_REDUNDANT_LOCATION: {[m
+[32m+     isSuccess: false,[m
+[32m+     code: 2001,[m
+[32m+     message: "이미 존재하는 시설입니다.",[m
+[32m+   },[m
+[32m+ [m
+[32m+   //Connection, Transaction 등의 서버 오류[m
+[32m+   DB_ERROR: { isSuccess: false, code: 4000, message: "데이터 베이스 에러" },[m
+[32m+   SERVER_ERROR: { isSuccess: false, code: 4001, message: "서버 에러" },[m
+[32m+ [m
+[32m+   SIGNIN_ERROR: {[m
+[32m+     isSuccess: false,[m
+[32m+     code: 4002,[m
+[32m+     message: "회원가입 에러-이메일 중복",[m
+[32m+   },[m
+[32m+ };[m
+[32m++>>>>>>> 0fa4bea7c50d363c105e067579ae0496f2a96ae8[m
+[1mdiff --cc package.json[m
+[1mindex 2aea9fe,47b7ef0..0000000[m
+[1m--- a/package.json[m
+[1m+++ b/package.json[m
+[36m@@@ -8,10 -8,17 +8,22 @@@[m
+      "fs": "^0.0.1-security",[m
+      "lodash": "^4.17.21",[m
+      "method-override": "^3.0.0",[m
+[32m++<<<<<<< HEAD[m
+[32m +    "morgan": "^1.10.0",[m
+[32m +    "multer": "^1.4.5-lts.1",[m
+[32m++=======[m
+[32m+     "mime": "^3.0.0",[m
+[32m+     "morgan": "^1.10.0",[m
+[32m++>>>>>>> 0fa4bea7c50d363c105e067579ae0496f2a96ae8[m
+      "mysql2": "^3.0.1",[m
+[32m+     "passport": "^0.6.0",[m
+[32m+     "passport-naver": "^1.0.6",[m
+[32m+     "passport-naver-v2": "^2.0.8",[m
+      "pool": "^0.4.1",[m
+[32m+     "request": "^2.88.2",[m
+      "winston-daily-rotate-file": "^4.7.1"[m
+[32m+   },[m
+[32m+   "scripts": {[m
+[32m+     "start": "node index.js"[m
+    }[m
+  }[m
+[1mdiff --cc src/app/Facility/facilityController.js[m
+[1mindex fc92ebb,b123040..0000000[m
+[1m--- a/src/app/Facility/facilityController.js[m
+[1m+++ b/src/app/Facility/facilityController.js[m
+[36m@@@ -30,32 -31,18 +32,50 @@@[m [mexports.getFacilityDetailInfo = async f[m
+    return res.send(response(baseResponse.SUCCESS, facilityInfo));[m
+  };[m
+  [m
+[32m++<<<<<<< HEAD[m
+[32m +[m
+[32m +/**[m
+[32m + * API No. 2-3[m
+[32m + * API Name : 시설 제보[m
+[32m + * [POST] /main/facility/register[m
+[32m + */  [m
+[32m + exports.postFacilityRegister = async function (req, res) {[m
+[32m +  /**[m
+[32m +   * Body: location, title, type, installAgency, la, lo   //이미지 업로드 이슈 (우선 이미지는 전달받지 X)[m
+[32m +   */[m
+[32m +   const {location, title, type, installAgency, la, lo} = req.body;[m
+[32m +[m
+[32m +   // 빈 값 체크[m
+[32m +   if (!location)[m
+[32m +       return res.send(response(baseResponse.REGISTER_LOCATION_EMPTY));[m
+[32m +   [m
+[32m + [m
+[32m +   const registerResponse = await facilityService.registerFacility([m
+[32m +       location,[m
+[32m +       title,[m
+[32m +       type,[m
+[32m +       installAgency,[m
+[32m +       la,[m
+[32m +       lo[m
+[32m +     );[m
+[32m +  [m
+[32m +   return res.send(registerResponse);[m
+[32m +  [m
+[31m- };[m
+[32m++};[m
+[32m++=======[m
+[32m+ /**[m
+[32m+  * API No. 1-4[m
+[32m+  * API Name : 흡연구역 상세 조회에서 북마크 추가 API[m
+[32m+  * [POST] /main/facility/detail/{facility_id}[m
+[32m+  */[m
+[32m+ exports.postFacilityBookmark = async function (req, res) {[m
+[32m+   const facilityid = req.params.facilityid;[m
+[32m+   const userid = req.body.userid;[m
+[32m+ [m
+[32m+   const setFacilityBookmark = await facilityService.retrieveBookmark([m
+[32m+     facilityid,[m
+[32m+     userid[m
+[32m+   );[m
+[32m+   return res.send(response(baseResponse.SUCCESS, setFacilityBookmark));[m
+[32m+ };[m
+[32m++>>>>>>> 0fa4bea7c50d363c105e067579ae0496f2a96ae8[m
+[1mdiff --cc src/app/Facility/facilityDao.js[m
+[1mindex 7a6ffad,9cfec44..0000000[m
+[1m--- a/src/app/Facility/facilityDao.js[m
+[1m+++ b/src/app/Facility/facilityDao.js[m
+[36m@@@ -62,48 -62,17 +62,64 @@@[m [masync function selectFacilityDetailInfo[m
+    return checkFacilityDetailInfo;[m
+  }[m
+  [m
+[32m++<<<<<<< HEAD[m
+[32m +[m
+[32m +// 위치로 시설 조회[m
+[32m +async function selectFacilLocation(connection, location) {[m
+[32m +  const selectFacilLocationQuery = `[m
+[32m +    SELECT location, title[m
+[32m +    FROM facility[m
+[32m +    WHERE location = ?;[m
+[32m +    `;[m
+[32m +  const [locationRows] = await connection.query(selectFacilLocationQuery, location);[m
+[32m +  return locationRows;  [m
+[32m +}[m
+[32m +[m
+[32m +async function insertFacilInfo(connection, insertFacilInfoParams) {[m
+[32m +  const insertFacilInfoQuery = `[m
+[32m +      INSERT INTO facility(location, title, type, installAgency, la, lo, report, createdAt, updatedAt, status)[m
+[32m +      VALUES (?, ?, ?, ?, ?, ?, 1, NOW(), NOW(), 1);[m
+[32m +    `;[m
+[32m +  const insertFacilInfoRow = await connection.query([m
+[32m +      insertFacilInfoQuery,[m
+[32m +      insertFacilInfoParams[m
+[32m +    );[m
+[32m +    [m
+[32m +    return insertFacilInfoRow;[m
+[32m +}[m
+[32m +[m
+[32m +//async function insertFacilInfoImgExist(connection, insertFacilInfoImgExistParams) {[m
+[32m +//  const insertFacilInfoImgExistQuery = `[m
+[32m +//      INSERT INTO facility(location, title, type, installAgency, la, lo, FacImg, report, createdAt, updatedAt, status)[m
+[32m +//      VALUES (?, ?, ?, ?, ?, ?, ?, 1, NOW(), NOW(), 1);[m
+[32m +//    `;[m
+[32m +//  const insertFacilInfoImgExistRow = await connection.query([m
+[32m +//      insertFacilInfoImgExistQuery,[m
+[32m +//      insertFacilInfoImgExistParams[m
+[32m +//    );[m
+[32m +//    [m
+[32m +//    return insertFacilInfoImgExistRow;[m
+[32m +//}[m
+[32m +[m
+[32m +module.exports = {[m
+[32m +  selectFacilityInfo,[m
+[32m +  selectFacilityDetailInfo,[m
+[32m +  selectFacilLocation,[m
+[32m +  insertFacilInfo,[m
+[32m +  //insertFacilInfoImgExist,[m
+[32m++=======[m
+[32m+ // 1-4. 흡연구역 상세 조회에서 북마크 추가[m
+[32m+ async function insertBookmark(connection, newparams) {[m
+[32m+   const in

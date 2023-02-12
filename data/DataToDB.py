@@ -35,8 +35,7 @@ file = open('./서울특별시 용산구_흡연구역_10_22_2021.csv','r',encodi
 fReader = csv.reader(file)
 
 for line in fReader:
-    query = "insert into facility(facility_id, title, img, location, type, installAgency, la, lo, rating, createdAt, updatedAt, status) 
-                values ('{0}','{1}','{2}','{3}')".format(rand()*1000000,line[0],line[1],line[2],line[3])
+    query = "insert into facility(title, type,status,location, installAgency, la, lo, createdAt, updatedAt) values ('{0}','{1}','{2}','{3}','{4}','{5}',now(),now())".format(line[0],line[1],line[2],line[3],line[4],line[5])
     cursor.execute(query)
     
 file.close()

@@ -100,10 +100,21 @@ async function insertFacilInfo(connection, insertFacilInfoParams) {
 //    return insertFacilInfoImgExistRow;
 //}
 
+
+// 1-4. 흡연구역 상세 조회에서 북마크 추가
+async function insertBookmark(connection, newparams) {
+  const insertBookmarkQuery = `
+    insert into bookmark(facility_id, user_id) values(?,?);
+  `;
+  const insertBookmark = await connection.query(insertBookmarkQuery, newparams);
+  return insertBookmark;
+}
+
 module.exports = {
   selectFacilityInfo,
   selectFacilityDetailInfo,
   selectFacilLocation,
   insertFacilInfo,
   //insertFacilInfoImgExist,
+  insertBookmark,
 };

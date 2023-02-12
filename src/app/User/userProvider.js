@@ -13,7 +13,8 @@ exports.retrieveBookmark = async function (userid) {
 exports.retrieveUser = async function (userid) {
   const connection = await pool.getConnection(async (conn) => conn);
   const result = await userDao.selectUserInfo(connection, userid);
-
+  //console.log(result[0].profile);
+  
   connection.release();
   return result;
 };
