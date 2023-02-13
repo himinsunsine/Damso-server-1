@@ -5,7 +5,8 @@ module.exports = {
   // Success
   SUCCESS: { isSuccess: true, code: 1000, message: true },
 
-  SIGNUP: { isSuccess: true, code: 1001, message: "신규 유저 회원가입 성공" },
+  NAVERLOGIN: { isSuccess: true, code: 1002, message: "네이버 로그인 성공" },
+  SIGNUP: { isSuccess: true, code: 1001, message: "신규 유저 로그인 성공" },
   SIGNIN: { isSuccess: true, code: 1002, message: "기존 유저 로그인 성공" },
 
   // Request Error

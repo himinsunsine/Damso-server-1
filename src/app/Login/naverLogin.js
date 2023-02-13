@@ -75,37 +75,45 @@ module.exports = function (app) {
       url: api_url,
       headers: { Authorization: header },
     };
-    request.get(options, async function (error, response, body) {
-      if (!error && response.statusCode == 200) {
-        // res.writeHead(200, { "Content-Type": "text/json;charset=utf-8" });
-        userData = JSON.parse(body).response;
-        const name = userData.name;
-        const email = userData.email;
-        const phone_number = userData.mobile_e164;
-        const birth = userData.birthyear + "-" + userData.birthday;
-        const sex = userData.gender;
-        const nickname = userData.name; //닉네임 없어서 일단 이름으로,,
-        const platform_type = "naver";
-        const access_token = token;
-        const naverLogin = await loginProvider.naverLogin(
-          name,
-          email,
-          phone_number,
-          birth,
-          sex,
-          nickname,
-          platform_type,
-          access_token
-        );
-        return res.send(naverLogin);
-      } else {
-        console.log("error");
-        if (response != null) {
-          res.status(response.statusCode).end();
-          console.log("error = " + response.statusCode);
+    if (token) {
+      request.get(options, async function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+          // res.writeHead(200, { "Content-Type": "text/json;charset=utf-8" });
+          userData = JSON.parse(body).response;
+          console.log(userData);
+          const name = userData.name;
+          const email = userData.email;
+          const phone_number = userData.mobile_e164;
+          const birth = userData.birthyear + "-" + userData.birthday;
+          const sex = userData.gender;
+          const nickname = userData.name; //닉네임 없어서 일단 이름으로,,
+          const platform_type = "naver";
+          const access_token = token;
+          const naverLogin = await loginProvider.naverLogin(
+            name,
+            email,
+            phone_number,
+            birth,
+            sex,
+            nickname,
+            platform_type,
+            access_token
+          );
+          return res.send(naverLogin);
+        } else {
+          console.log("error");
+          if (response != null) {
+            res.status(response.statusCode).end();
+            console.log("error = " + response.statusCode);
+          }
         }
-      }
-    });
+      });
+    } else {
+      return res.send({
+        status: false,
+        message: "token 없음",
+      });
+    }
 
     //
   });
