@@ -87,6 +87,7 @@ module.exports = function (app) {
           const birth = userData.birthyear + "-" + userData.birthday;
           const sex = userData.gender;
           const nickname = userData.name; //닉네임 없어서 일단 이름으로,,
+          const profile = userData.profile_image;
           const platform_type = "naver";
           const access_token = token;
           const naverLogin = await loginProvider.naverLogin(
@@ -96,6 +97,7 @@ module.exports = function (app) {
             birth,
             sex,
             nickname,
+            profile,
             platform_type,
             access_token
           );

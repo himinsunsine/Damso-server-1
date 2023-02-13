@@ -13,6 +13,7 @@ exports.naverLogin = async function (
   birth,
   sex,
   nickname,
+  profile,
   platform_type,
   access_token
 ) {
@@ -25,6 +26,7 @@ exports.naverLogin = async function (
     birth,
     sex,
     nickname,
+    profile,
     platform_type,
     access_token,
   ];
