@@ -80,13 +80,14 @@ module.exports = function (app) {
         if (!error && response.statusCode == 200) {
           // res.writeHead(200, { "Content-Type": "text/json;charset=utf-8" });
           userData = JSON.parse(body).response;
+          console.log("userData");
           console.log(userData);
           const name = userData.name;
           const email = userData.email;
           const phone_number = userData.mobile_e164;
           const birth = userData.birthyear + "-" + userData.birthday;
           const sex = userData.gender;
-          const nickname = userData.name; //닉네임 없어서 일단 이름으로,,
+          const nickname = userData.nickname; //닉네임 없어서 일단 이름으로,,
           const profile = userData.profile_image;
           const platform_type = "naver";
           const access_token = token;
