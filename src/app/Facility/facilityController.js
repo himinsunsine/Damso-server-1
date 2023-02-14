@@ -42,23 +42,40 @@ exports.getFacilityDetailInfo = async function (req, res) {
   /**
    * Body: location, title, type, installAgency, la, lo   //이미지 업로드 이슈 (우선 이미지는 전달받지 X)
    */
-   const {location, title, type, installAgency, la, lo} = req.body;
 
    // 빈 값 체크
-   if (!location)
-       return res.send(response(baseResponse.REGISTER_LOCATION_EMPTY));
    
- 
-   const registerResponse = await facilityService.registerFacility(
-       location,
-       title,
-       type,
-       installAgency,
-       la,
-       lo
-     );
-  
-   return res.send(registerResponse);
+  if(req.files.uploadFile){
+    let img = req.files.uploadFile;
+    img.mv("./facilityImg/"+img.name);
+    const {location, title, type, installAgency, la, lo} = req.body;
+    if (!location) return res.send(response(baseResponse.REGISTER_LOCATION_EMPTY));
+
+    const registerwithImgResponse = await facilityService.registerFacilityImgExsits(
+      location,
+      title,
+      type,
+      installAgency,
+      la,
+      lo,
+      img.name
+    );
+    return res.send(registerwithImgResponse);
+    
+  }  
+  else {
+    const {location, title, type, installAgency, la, lo} = req.body;
+    const registerResponse = await facilityService.registerFacility(
+      location,
+      title,
+      type,
+      installAgency,
+      la,
+      lo
+    );
+    return res.send(registerResponse);
+  }
+   
   
 };
 /**
