@@ -96,18 +96,21 @@ async function searchFacilityInfo(connection, searchFacilityParams) {
 `;
 }
 
-//async function insertFacilInfoImgExist(connection, insertFacilInfoImgExistParams) {
-//  const insertFacilInfoImgExistQuery = `
-//      INSERT INTO facility(location, title, type, installAgency, la, lo, FacImg, report, createdAt, updatedAt, status)
-//      VALUES (?, ?, ?, ?, ?, ?, ?, 1, NOW(), NOW(), 1);
-//    `;
-//  const insertFacilInfoImgExistRow = await connection.query(
-//      insertFacilInfoImgExistQuery,
-//      insertFacilInfoImgExistParams
-//    );
-//
-//    return insertFacilInfoImgExistRow;
-//}
+async function insertFacilInfoImgExist(
+  connection,
+  insertFacilInfoImgExistParams
+) {
+  const insertFacilInfoImgExistQuery = `
+      INSERT INTO facility(location, title, type, installAgency, la, lo, img, report, createdAt, updatedAt, status)
+      VALUES (?, ?, ?, ?, ?, ?, ?, 1, NOW(), NOW(), 1);
+    `;
+  const insertFacilInfoImgExistRow = await connection.query(
+    insertFacilInfoImgExistQuery,
+    insertFacilInfoImgExistParams
+  );
+
+  return insertFacilInfoImgExistRow;
+}
 
 // 1-4. 흡연구역 상세 조회에서 북마크 추가
 async function insertBookmark(connection, newparams) {
@@ -123,6 +126,6 @@ module.exports = {
   selectFacilityDetailInfo,
   selectFacilLocation,
   insertFacilInfo,
-  //insertFacilInfoImgExist,
+  insertFacilInfoImgExist,
   insertBookmark,
 };

@@ -38,19 +38,26 @@ exports.getUserInfo = async function (req, res) {
   if (!userid) {
     return res.send(errResponse(baseResponse.USER_ID_NOT_MATCH_IN_PROFILE));
   } else {
-    const userInfo = await userProvider.retrieveUser(userid);
-    console.log(userInfo[0].profile);
+    const data = await userProvider.retrieveProfile(userid);
+    console.log(data);
+    if (data[0].profile == null) {
+      const userInfo = await userProvider.retrieveUser(userid);
+      return res.send(response(baseResponse.SUCCESS, userInfo));
+    } else {
+      const userInfo = await userProvider.retrieveUser(userid);
+      console.log(userInfo[0].profile);
 
-    // var fileName = `./upload/${userInfo[0].profile}`;
-    // const data = fs.readFileSync(fileName);
-    // console.log(data);
+      var fileName = `./upload/${userInfo[0].profile}`;
+      const data = fs.readFileSync(fileName);
+      console.log(data);
 
-    // fs.readFile(`'./upload/'${userInfo[0].profile}`,function (err, data){
-    //   console.log(data);
-    //   }
-    // )
-    const result = [userInfo];
-    return res.send(response(baseResponse.SUCCESS, result));
+      // fs.readFile(`'./upload/'${userInfo[0].profile}`,function (err, data){
+      //   console.log(data);
+      //   }
+      // )
+      const result = [userInfo, data];
+      return res.send(response(baseResponse.SUCCESS, result));
+    }
   }
 };
 

@@ -33,26 +33,25 @@ exports.registerFacility = async function (location, title, type, installAgency,
 }
 
 // 이미지 있는 시설 업로드
-//exports.registerFacilityImgExsits = async function (location, title, type, installAgency, la, lo, FacImg) {
-//    try {
-//        // 시설 중복 확인
-//        const locationRows = await facilityProvider.locationCheck(location);
-//        if (locationRows.length > 0)
-//            return errResponse(baseResponse.REGISTER_REDUNDANT_LOCATION);
-//
-//        const insertFacilInfoParams = [location, title, type, installAgency, la, lo, FacImg];
-//
-//        const connection = await pool.getConnection(async (conn) => conn);
-//
-//        const facilResult = await facilityDao.insertFacilInfoImgExist(connection, insertFacilInfoParams);
-//        connection.release();
-//        return response(baseResponse.SUCCESS);
-//
-//    } catch (err) {
-//        logger.error(`App - registerFacility Service error\n: ${err.message}`);
-//        return errResponse(baseResponse.DB_ERROR);
-//    }
-//}
+exports.registerFacilityImgExsits = async function (location, title, type, installAgency, la, lo, FacImg) {
+   try {
+       // 시설 중복 확인
+       const locationRows = await facilityProvider.locationCheck(location);
+       if (locationRows.length > 0) return errResponse(baseResponse.REGISTER_REDUNDANT_LOCATION);
+
+       const insertFacilInfoParams = [location, title, type, installAgency, la, lo, FacImg];
+
+       const connection = await pool.getConnection(async (conn) => conn);
+
+       const facilResult = await facilityDao.insertFacilInfoImgExist(connection, insertFacilInfoParams);
+       connection.release();
+       return response(baseResponse.SUCCESS);
+
+   } catch (err) {
+       logger.error(`App - registerFacility Service error\n: ${err.message}`);
+       return errResponse(baseResponse.DB_ERROR);
+   }
+}
 exports.retrieveBookmark = async function(facilityid, userid){
     try{
 
