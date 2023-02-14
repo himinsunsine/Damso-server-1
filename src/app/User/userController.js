@@ -41,15 +41,15 @@ exports.getUserInfo = async function (req, res) {
     const userInfo = await userProvider.retrieveUser(userid);
     console.log(userInfo[0].profile);
 
-    var fileName = `./upload/${userInfo[0].profile}`;
-    const data = fs.readFileSync(fileName);
-    console.log(data);
+    // var fileName = `./upload/${userInfo[0].profile}`;
+    // const data = fs.readFileSync(fileName);
+    // console.log(data);
 
     // fs.readFile(`'./upload/'${userInfo[0].profile}`,function (err, data){
     //   console.log(data);
     //   }
     // )
-    const result = [userInfo, data];
+    const result = [userInfo];
     return res.send(response(baseResponse.SUCCESS, result));
   }
 };
@@ -80,7 +80,6 @@ exports.postUserImage = async function (req, res) {
     return res.send(UserImageResponse);
   }
 };
-
 
 /**
  * API No. 5-3

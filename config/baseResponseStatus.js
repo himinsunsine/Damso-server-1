@@ -37,6 +37,11 @@ module.exports = {
     code: 2001,
     message: "이미 존재하는 시설입니다.",
   },
+  SEARCH_FACILITY_EMPTY: {
+    isSuccess: false,
+    code: 6001,
+    message: "위도, 경도값이 비었습니다.",
+  },
 
   //Connection, Transaction 등의 서버 오류
   DB_ERROR: { isSuccess: false, code: 4000, message: "데이터 베이스 에러" },

@@ -10,7 +10,7 @@ module.exports = function (app) {
   var client_id = "N0ZEtPeJzyzxu0vAtQ7j";
   var client_secret = "buratDFMaE";
   var state = "RAMDOM_STATE";
-  var redirectURI = encodeURI("http://3.37.122.59:3000/callback");
+  var redirectURI = encodeURI("http://localhost:3000/callback");
   var api_url = "";
   var userData = {};
   // 프론트에서 처리하는 곳인데 일단 작성함

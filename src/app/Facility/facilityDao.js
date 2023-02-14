@@ -62,7 +62,6 @@ async function selectFacilityDetailInfo(connection, facilityid) {
   return checkFacilityDetailInfo;
 }
 
-
 // 위치로 시설 조회
 async function selectFacilLocation(connection, location) {
   const selectFacilLocationQuery = `
@@ -70,8 +69,11 @@ async function selectFacilLocation(connection, location) {
     FROM facility
     WHERE location = ?;
     `;
-  const [locationRows] = await connection.query(selectFacilLocationQuery, location);
-  return locationRows;  
+  const [locationRows] = await connection.query(
+    selectFacilLocationQuery,
+    location
+  );
+  return locationRows;
 }
 
 async function insertFacilInfo(connection, insertFacilInfoParams) {
@@ -80,11 +82,18 @@ async function insertFacilInfo(connection, insertFacilInfoParams) {
       VALUES (?, ?, ?, ?, ?, ?, 1, NOW(), NOW(), 1);
     `;
   const insertFacilInfoRow = await connection.query(
-      insertFacilInfoQuery,
-      insertFacilInfoParams
-    );
-    
-    return insertFacilInfoRow;
+    insertFacilInfoQuery,
+    insertFacilInfoParams
+  );
+
+  return insertFacilInfoRow;
+}
+
+// 2-4. 흡연구역 검색
+async function searchFacilityInfo(connection, searchFacilityParams) {
+  const selectSearchFacility = `
+    SELECT st_distance(POINT(${searchFacilityParams[1]}, ${searchFacilityParams[0]}), POINT(127.0959459000, 37.5353642300));
+`;
 }
 
 //async function insertFacilInfoImgExist(connection, insertFacilInfoImgExistParams) {
@@ -96,10 +105,9 @@ async function insertFacilInfo(connection, insertFacilInfoParams) {
 //      insertFacilInfoImgExistQuery,
 //      insertFacilInfoImgExistParams
 //    );
-//    
+//
 //    return insertFacilInfoImgExistRow;
 //}
-
 
 // 1-4. 흡연구역 상세 조회에서 북마크 추가
 async function insertBookmark(connection, newparams) {
