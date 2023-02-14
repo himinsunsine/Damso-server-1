@@ -2,7 +2,7 @@ const facilityProvider = require("./facilityProvider.js");
 const facilityService = require("../Facility/facilityService");
 const baseResponse = require("../../../config/baseResponseStatus");
 const { response, errResponse } = require("../../../config/response");
-
+const fs = require("fs");
 
 /**
  * API No. 1-2
@@ -11,11 +11,21 @@ const { response, errResponse } = require("../../../config/response");
  */
 exports.getFacilitySimpleInfo = async function (req, res) {
   const facilityid = req.params.facilityid;
-
+  
   const facilityInfo = await facilityProvider.retrieveFacility(facilityid);
   console.log(facilityInfo);
+  if(facilityInfo[0].img == null){
+    return res.send(response(baseResponse.SUCCESS, facilityInfo));
+  }
+  else {
+    var fileName =`./facilityImg/${facilityInfo[0].img}`;
+    const data = fs.readFileSync(fileName);
 
-  return res.send(response(baseResponse.SUCCESS, facilityInfo));
+    const result =[facilityInfo, data];
+    return res.send(response(baseResponse.SUCCESS, result));
+    
+  }
+
 };
 
 /**
@@ -29,7 +39,19 @@ exports.getFacilityDetailInfo = async function (req, res) {
   const facilityInfo = await facilityProvider.retrieveFacilityDetail(
     facilityid
   );
-  return res.send(response(baseResponse.SUCCESS, facilityInfo));
+  console.log(facilityInfo);
+  
+  if(facilityInfo.img == null){
+    return res.send(response(baseResponse.SUCCESS, facilityInfo));
+  }
+  else {
+    var fileName =`./facilityImg/${facilityInfo.img}`;
+    const data = fs.readFileSync(fileName);
+
+    const result =[facilityInfo, data];
+    return res.send(response(baseResponse.SUCCESS, result));
+    
+  }
 };
 
 
