@@ -32,6 +32,17 @@ async function selectUserInfo(connection, userid) {
   return userInfoRows;
 }
 
+//프로필 존재 여부 조회 
+async function retrieveProfile(connection, userid){
+  const retrieveProfileQuery = `
+    select profile
+    from user
+    where user_id=?;
+  `;
+  const [userProfileInfo] = await connection.query(retrieveProfileQuery, userid);
+  return userProfileInfo;
+}
+
 //설정 - 문의
 
 //설정 - 이용약관 조회
@@ -97,4 +108,5 @@ module.exports = {
   updateUserImage,
   selectUserInfo,
   updateUserStatus,
+  retrieveProfile,
 };
