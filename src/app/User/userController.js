@@ -41,7 +41,7 @@ exports.getUserInfo = async function (req, res) {
     
     const data = await userProvider.retrieveProfile(userid);
     console.log(data);
-    if(data.profile==null){
+    if(data[0].profile==null){
       const userInfo = await userProvider.retrieveUser(userid);
       return res.send(response(baseResponse.SUCCESS, userInfo));
       
