@@ -32,7 +32,6 @@ exports.locationCheck = async function (location) {
 
   return locationCheckResult;
 };
-
 exports.searchFacility = async function (la, lo) {
   const connection = await pool.getConnection(async (conn) => conn);
 
