@@ -105,7 +105,7 @@ exports.getSearch = async function (req, res) {
   }
 
   const searchResponse = await facilityProvider.searchFacility(la, lo);
-  return res.send(response(baseResponse.SUCCESS, searchResponse));
+  return res.send(response(baseResponse.SEARCH, searchResponse));
 };
 
 /**

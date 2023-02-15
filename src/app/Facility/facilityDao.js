@@ -96,7 +96,6 @@ async function searchFacilityInfo(connection, searchFacilityParams) {
     FROM facility
     ORDER BY distance
     LIMIT 20;`;
-  console.log(selectSearchFacility);
   const [searchRows] = await connection.query(
     selectSearchFacility,
     searchFacilityParams
