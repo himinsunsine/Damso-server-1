@@ -100,13 +100,12 @@ exports.postFacilityRegister = async function (req, res) {
  */
 exports.getSearch = async function (req, res) {
   const { la, lo } = req.body;
-  console.log(la, lo);
   if (!la) {
     return res.send(response(baseResponse.SEARCH_FACILITY_EMPTY));
   }
 
   const searchResponse = await facilityProvider.searchFacility(la, lo);
-  return res.send(response(baseResponse.SUCCESS, searchResponse));
+  return res.send(response(baseResponse.SEARCH, searchResponse));
 };
 
 /**

@@ -92,8 +92,15 @@ async function insertFacilInfo(connection, insertFacilInfoParams) {
 // 2-4. 흡연구역 검색
 async function searchFacilityInfo(connection, searchFacilityParams) {
   const selectSearchFacility = `
-    SELECT st_distance(POINT(${searchFacilityParams[1]}, ${searchFacilityParams[0]}), POINT(127.0959459000, 37.5353642300));
-`;
+    SELECT facility_id, title, location, rating, st_distance(POINT(${searchFacilityParams[1]}, ${searchFacilityParams[0]}), POINT(lo, la)) AS distance
+    FROM facility
+    ORDER BY distance
+    LIMIT 20;`;
+  const [searchRows] = await connection.query(
+    selectSearchFacility,
+    searchFacilityParams
+  );
+  return searchRows;
 }
 
 async function insertFacilInfoImgExist(
@@ -152,4 +159,5 @@ module.exports = {
   insertBookmark,
   insertReview,
   insertReport,
+  searchFacilityInfo,
 };
