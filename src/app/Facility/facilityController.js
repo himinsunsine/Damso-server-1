@@ -44,7 +44,7 @@ exports.getFacilityDetailInfo = async function (req, res) {
     var fileName = `./facilityImg/${facilityInfo.img}`;
     const data = fs.readFileSync(fileName);
 
-    const result = [facilityInfo, data];
+    const result = [facilityInfo,fileName];
     return res.send(response(baseResponse.SUCCESS, result));
   }
 };
@@ -78,19 +78,19 @@ exports.postFacilityRegister = async function (req, res) {
         lo,
         img.name
       );
-    return res.send(registerwithImgResponse);
-  } else {
-    const { location, title, type, installAgency, la, lo } = req.body;
-    const registerResponse = await facilityService.registerFacility(
-      location,
-      title,
-      type,
-      installAgency,
-      la,
-      lo
-    );
-    return res.send(registerResponse);
-  }
+    return res.send(registerwithImgResponse);}
+  // } else {
+  //   const { location, title, type, installAgency, la, lo } = req.body;
+  //   const registerResponse = await facilityService.registerFacility(
+  //     location,
+  //     title,
+  //     type,
+  //     installAgency,
+  //     la,
+  //     lo
+  //   );
+  //   return res.send(registerResponse);
+  // }
 };
 
 /**
@@ -122,4 +122,44 @@ exports.postFacilityBookmark = async function (req, res) {
     userid
   );
   return res.send(response(baseResponse.SUCCESS, setFacilityBookmark));
+};
+
+
+/**
+ * API No. 2-1
+ * API Name : 흡연시설 후기 작성
+ * [POST] /main/facility/:facilityid/reviews/write
+ */
+exports.postFacilityReviews = async function (req, res) {
+  const facilityid = req.params.facilityid;
+  const userid = req.body.userid;
+  const rating = req.body.rating;
+  const content = req.body.content;
+
+  const registerReviewResponse = await facilityService.registerReview(
+    facilityid,
+    userid,
+    rating,
+    content
+  );
+  return res.send(response(baseResponse.SUCCESS, registerReviewResponse));
+};
+
+
+/**
+ * API No. 2-2
+ * API Name : 시설 허위 정보 신고
+ * [POST] /main/facility/:facilityid/report
+ */
+exports.postFacilityReport = async function (req, res) {
+  const facilityid = req.params.facilityid;
+  const userid = req.body.userid;
+  const reportType = req.body.reportType;
+
+  const reportFacilityResult = await facilityService.reportfacility(
+    facilityid,
+    userid,
+    reportType
+  );
+  return res.send(response(baseResponse.SUCCESS, reportFacilityResult));
 };

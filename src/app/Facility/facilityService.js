@@ -69,3 +69,39 @@ exports.retrieveBookmark = async function(facilityid, userid){
         return errResponse(baseResponse.DB_ERROR);
     }
 }
+
+
+exports.registerReview = async function (facilityid, userid, rating, content){
+    try{
+        const connection = await pool.getConnection(async (conn)=> conn);
+
+        const reviewparams = [facilityid, userid, rating, content];
+        const registerReviewReusult = await facilityDao.insertReview(connection, reviewparams);
+        console.log(`${facilityid}의 후기 추가 완료`);
+        connection.release();
+
+        return response(baseResponse.SUCCESS);
+    }
+    catch(err){
+        logger.error(`App - registerReview error\n: ${err.message}`);
+        return errResponse(baseResponse.DB_ERROR);
+    }
+}
+
+
+exports.reportfacility = async function (facilityid, userid, reportType){
+    try{
+        const connection = await pool.getConnection(async (conn)=> conn);
+
+        const reportparams = [facilityid, userid, reportType];
+        const reportFacilityResult = await facilityDao.insertReport(connection, reportparams);
+        console.log(`${facilityid} 신고 접수 완료`);
+        connection.release();
+
+        return response(baseResponse.SUCCESS);
+    }
+    catch(err){
+        logger.error(`App = reportFacility error\n: ${err.message}`);
+        return errResponse(baseResponse.DB_ERROR);
+    }
+}

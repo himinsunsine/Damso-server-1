@@ -77,7 +77,7 @@ async function updateUserNickname(connection, newparams) {
   const updateUserQuery = `
         UPDATE user 
         SET nickname = ? 
-        WHERE location = ?;
+        WHERE user_id = ?;
     `;
   const updateUserRow = await connection.query(updateUserQuery, newparams);
   return updateUserRow;
