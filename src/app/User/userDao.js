@@ -1,35 +1,46 @@
 //모든 유저 조회
 async function selectUser(connection) {
-    const selectUserListQuery = `
+  const selectUserListQuery = `
                   SELECT user_id, email, name 
                   FROM user;
                   `;
-    const [userRows] = await connection.query(selectUserListQuery);
-    return userRows;
+  const [userRows] = await connection.query(selectUserListQuery);
+  return userRows;
 }
 
 // userId 회원 조회
 async function selectUserId(connection, userid) {
-    const selectUserIdQuery = `
+  const selectUserIdQuery = `
                    SELECT user_id, email, nickname 
                    FROM user 
                    WHERE user_id = ?;
                    `;
-    const [userRow] = await connection.query(selectUserIdQuery, userid);
-    return userRow;
+  const [userRow] = await connection.query(selectUserIdQuery, userid);
+  return userRow;
 }
 
-//1-1. 내 정보
+//5. 내 정보
 
 //내 정보 조회 --ok
-async function selectUserInfo(connection, userid){
-    const selectUserListQuery = `
-        SELECT user_id, name, nickname, profile 
+async function selectUserInfo(connection, userid) {
+  const selectUserListQuery = `
+        SELECT user_id, name, nickname, profile, status
         from user 
         where user_id=?;
     `;
-    const [userInfoRows] = await connection.query(selectUserListQuery,userid);
-    return userInfoRows;
+  const [userInfoRows] = await connection.query(selectUserListQuery, userid);
+  return userInfoRows;
+}
+
+//프로필 존재 여부 조회 
+async function retrieveProfile(connection, userid){
+  const retrieveProfileQuery = `
+    select profile
+    from user
+    where user_id=?;
+  `;
+  const [userProfileInfo] = await connection.query(retrieveProfileQuery, userid);
+  return userProfileInfo;
 }
 
 //설정 - 문의
@@ -39,57 +50,63 @@ async function selectUserInfo(connection, userid){
 //설정 - 개인정보 처리방침 조회
 
 //설정 - 회원 탈퇴
+async function updateUserStatus(connection, userid) {
+  const updateStatusQuery = `
+        UPDATE user
+        SET status = 'resign'
+        WHERE user_id=?;
+    `;
+  const resignUserRow = await connection.query(updateStatusQuery, userid);
+  return resignUserRow;
+}
 
 //내 제보 현황 조회
 
 //내 정보 수정 - 이미지 --ok
-async function updateUserImage(connection, newparams){
-    const updateUserQuery = `
+async function updateUserImage(connection, newparams) {
+  const updateUserQuery = `
         UPDATE user 
         SET profile = ? 
         WHERE user_id = ?;
     `;
-    const updateUserRow = await connection.query(updateUserQuery, newparams);
-    return updateUserRow;
+  const updateUserRow = await connection.query(updateUserQuery, newparams);
+  return updateUserRow;
 }
 //내 정보 수정 - 닉네임 --ok
-async function updateUserNickname(connection, newparams){
-    const updateUserQuery = `
+async function updateUserNickname(connection, newparams) {
+  const updateUserQuery = `
         UPDATE user 
         SET nickname = ? 
-        WHERE user_id = ?;
+        WHERE user_id= ?;
     `;
-    const updateUserRow = await connection.query(updateUserQuery, newparams);
-    return updateUserRow;
+  const updateUserRow = await connection.query(updateUserQuery, newparams);
+  return updateUserRow;
 }
 
-//1-2. 즐겨찾기
+//3. 즐겨찾기
 
 //즐겨찾기 조회 --ok
 
-async function selectBookmark(connection, userid){
-    const selectBookmarkquery = `
+async function selectBookmark(connection, userid) {
+  const selectBookmarkquery = `
     select user_id, id, f.facility_id, title, location, img, rating 
     from bookmark 
-    inner join facility f on bookmark.facility_id = f.facility_id;
+    inner join facility f on bookmark.facility_id = f.facility_id
+    where user_id=?;
     `;
-    const [checkBookmark] = await connection.query(selectBookmarkquery, userid);
-    return checkBookmark;
+  const [checkBookmark] = await connection.query(selectBookmarkquery, userid);
+  return checkBookmark;
 }
 
-//시설 클릭 
 
-// async function selectFacility(connection, la, lo){
-//     const selectFacilityquery = `
-        
-//     `;
-//     const selectFacility = await connection.query(updateUserQuery, la, lo);
-//     return selectFacility[0];
-// }
 
-module.exports ={
-    selectBookmark,
-    updateUserNickname,
-    updateUserImage,
-    selectUserInfo,
+
+
+module.exports = {
+  selectBookmark,
+  updateUserNickname,
+  updateUserImage,
+  selectUserInfo,
+  updateUserStatus,
+  retrieveProfile,
 };
