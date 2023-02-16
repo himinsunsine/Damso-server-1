@@ -38,19 +38,17 @@ exports.getUserInfo = async function (req, res) {
   if (!userid) {
     return res.send(errResponse(baseResponse.USER_ID_NOT_MATCH_IN_PROFILE));
   } else {
-    
     const data = await userProvider.retrieveProfile(userid);
     console.log(data);
-    if(data[0].profile==null){
+    if (data[0].profile == null) {
       const userInfo = await userProvider.retrieveUser(userid);
       return res.send(response(baseResponse.SUCCESS, userInfo));
-      
-    } else{
+    } else {
       const userInfo = await userProvider.retrieveUser(userid);
       console.log(userInfo[0].profile);
 
       var fileName = `./upload/${userInfo[0].profile}`;
-      const data = fs.readFileSync(fileName);
+      //const data = fs.readFileSync(fileName);
       // let img = new Uint8Array(data);
       // let blob = new Blob([img],{type:'image/jpeg'})
       // const Url= URL.createObjectURL(blob);
@@ -92,7 +90,6 @@ exports.postUserImage = async function (req, res) {
     return res.send(UserImageResponse);
   }
 };
-
 
 /**
  * API No. 5-3

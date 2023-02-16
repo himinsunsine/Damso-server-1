@@ -8,6 +8,11 @@ module.exports = {
   NAVERLOGIN: { isSuccess: true, code: 1002, message: "네이버 로그인 성공" },
   SIGNUP: { isSuccess: true, code: 1001, message: "신규 유저 로그인 성공" },
   SIGNIN: { isSuccess: true, code: 1002, message: "기존 유저 로그인 성공" },
+  SEARCH: {
+    isSuccess: true,
+    code: 1003,
+    message: "현위치 기준, 흡연시설 20곳 검색 성공",
+  },
 
   // Request Error
   USER_ID_NOT_MATCH_IN_BOOKMARK: {
@@ -36,6 +41,11 @@ module.exports = {
     isSuccess: false,
     code: 2001,
     message: "이미 존재하는 시설입니다.",
+  },
+  SEARCH_FACILITY_EMPTY: {
+    isSuccess: false,
+    code: 6001,
+    message: "위도, 경도값이 비었습니다.",
   },
 
   //Connection, Transaction 등의 서버 오류

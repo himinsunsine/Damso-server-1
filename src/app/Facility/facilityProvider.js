@@ -11,7 +11,6 @@ exports.retrieveFacility = async function (facilityid) {
   return result;
 };
 
-
 exports.retrieveFacilityDetail = async function (facilityid) {
   const connection = await pool.getConnection(async (conn) => conn);
   const result = await facilityDao.selectFacilityDetailInfo(
@@ -23,11 +22,25 @@ exports.retrieveFacilityDetail = async function (facilityid) {
   return result;
 };
 
-
 exports.locationCheck = async function (location) {
   const connection = await pool.getConnection(async (conn) => conn);
-  const locationCheckResult = await facilityDao.selectFacilLocation(connection, location);
+  const locationCheckResult = await facilityDao.selectFacilLocation(
+    connection,
+    location
+  );
   connection.release();
 
   return locationCheckResult;
+};
+exports.searchFacility = async function (la, lo) {
+  const connection = await pool.getConnection(async (conn) => conn);
+
+  const searchFacilityParams = [la, lo];
+  const searchFacilityResult = await facilityDao.searchFacilityInfo(
+    connection,
+    searchFacilityParams
+  );
+  connection.release();
+
+  return searchFacilityResult;
 };

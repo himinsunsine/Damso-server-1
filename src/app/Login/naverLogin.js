@@ -10,7 +10,7 @@ module.exports = function (app) {
   var client_id = "N0ZEtPeJzyzxu0vAtQ7j";
   var client_secret = "buratDFMaE";
   var state = "RAMDOM_STATE";
-  var redirectURI = encodeURI("http://3.37.122.59:3000/callback");
+  var redirectURI = encodeURI("http://localhost:3000/callback");
   var api_url = "";
   var userData = {};
   // 프론트에서 처리하는 곳인데 일단 작성함
@@ -80,14 +80,15 @@ module.exports = function (app) {
         if (!error && response.statusCode == 200) {
           // res.writeHead(200, { "Content-Type": "text/json;charset=utf-8" });
           userData = JSON.parse(body).response;
+          console.log("userData");
           console.log(userData);
           const name = userData.name;
           const email = userData.email;
           const phone_number = userData.mobile_e164;
           const birth = userData.birthyear + "-" + userData.birthday;
           const sex = userData.gender;
-          const nickname = userData.name; //닉네임 없어서 일단 이름으로,,
-          const profile = userData.profile_image;
+          const nickname = userData.nickname; //닉네임 없어서 일단 이름으로,,
+          // const profile = userData.profile_image;
           const platform_type = "naver";
           const access_token = token;
           const naverLogin = await loginProvider.naverLogin(
@@ -97,7 +98,7 @@ module.exports = function (app) {
             birth,
             sex,
             nickname,
-            profile,
+            // profile,
             platform_type,
             access_token
           );
