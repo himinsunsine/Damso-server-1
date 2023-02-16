@@ -85,18 +85,7 @@ exports.getFacilityDetailInfo = async function (req, res) {
     return res.send(registerwithImgResponse);
     
   }  
-  //else {
-  //  const {location, title, type, installAgency, la, lo} = req.body;
-  //  const registerResponse = await facilityService.registerFacility(
-  //    location,
-  //    title,
-  //    type,
-  //    installAgency,
-  //    la,
-  //    lo
-  //  );
-  //  return res.send(registerResponse);
-  //}
+  
    
   
 };
