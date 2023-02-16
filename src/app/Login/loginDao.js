@@ -5,8 +5,8 @@ const {
 async function naversignup(connection, insertUserData) {
   // 좌표 삽입 값 삽입 필요 (현재는 테이블에 위치만 삽입)
   const insertUserDataQuery = `
-      INSERT INTO user( name, email, phone_number, birth, sex, nickname,  platform_type, access_token)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+      INSERT INTO user( name, email, phone_number, birth, sex, nickname, profile, platform_type, access_token)
+      VALUES (?, ?, ?, ?, ?, ?, "profileImg_setting.jpeg", ?, ?);
     `;
   const insertUserDataRow = await connection.query(
     insertUserDataQuery,

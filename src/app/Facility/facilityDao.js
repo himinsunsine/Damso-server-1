@@ -121,6 +121,28 @@ async function insertBookmark(connection, newparams) {
   return insertBookmark;
 }
 
+
+//2-1. 후기 작성
+async function insertReview(connection, reviewparams) {
+  const insertReviewQuery = `
+  INSERT INTO review(facility_facility_id, user_user_id, rating, content, createdAt)
+  VALUES(?, ?, ?, ?, NOW());
+  `;
+  const [insertReviewRow] = await connection.query(insertReviewQuery, reviewparams);
+  return insertReviewRow;
+}
+
+
+//2-2. 신고 접수
+async function insertReport(connection, reportparams) {
+  const insertReportQuery = `
+  INSERT INTO report(facility_facility_id, user_user_id, reportType, createdAt)
+  VALUES(?, ?, ?, NOW());
+  `;
+  const [insertReportRow] = await connection.query(insertReportQuery, reportparams);
+  return insertReportRow;
+}
+
 module.exports = {
   selectFacilityInfo,
   selectFacilityDetailInfo,
@@ -128,4 +150,6 @@ module.exports = {
   insertFacilInfo,
   insertFacilInfoImgExist,
   insertBookmark,
+  insertReview,
+  insertReport,
 };
