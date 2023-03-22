@@ -32,14 +32,17 @@ async function selectUserInfo(connection, userid) {
   return userInfoRows;
 }
 
-//프로필 존재 여부 조회 
-async function retrieveProfile(connection, userid){
+//프로필 존재 여부 조회
+async function retrieveProfile(connection, userid) {
   const retrieveProfileQuery = `
     select profile
     from user
     where user_id=?;
   `;
-  const [userProfileInfo] = await connection.query(retrieveProfileQuery, userid);
+  const [userProfileInfo] = await connection.query(
+    retrieveProfileQuery,
+    userid
+  );
   return userProfileInfo;
 }
 
@@ -97,10 +100,6 @@ async function selectBookmark(connection, userid) {
   const [checkBookmark] = await connection.query(selectBookmarkquery, userid);
   return checkBookmark;
 }
-
-
-
-
 
 module.exports = {
   selectBookmark,

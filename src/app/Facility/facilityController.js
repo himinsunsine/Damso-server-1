@@ -18,7 +18,7 @@ exports.getFacilitySimpleInfo = async function (req, res) {
     return res.send(response(baseResponse.SUCCESS, facilityInfo));
   } else {
     var fileName = `./facilityImg/${facilityInfo[0].img}`;
-    const data = fs.readFileSync(fileName);
+    //const data = fs.readFileSync(fileName);
 
     const result = [facilityInfo, fileName];
     return res.send(response(baseResponse.SUCCESS, result));
@@ -42,9 +42,9 @@ exports.getFacilityDetailInfo = async function (req, res) {
     return res.send(response(baseResponse.SUCCESS, facilityInfo));
   } else {
     var fileName = `./facilityImg/${facilityInfo.img}`;
-    const data = fs.readFileSync(fileName);
+    //const data = fs.readFileSync(fileName);
 
-    const result = [facilityInfo,fileName];
+    const result = [facilityInfo, fileName];
     return res.send(response(baseResponse.SUCCESS, result));
   }
 };
@@ -61,8 +61,8 @@ exports.postFacilityRegister = async function (req, res) {
 
   // 빈 값 체크
 
-  if (req.files.uploadFile) {
-    let img = req.files.uploadFile;
+  if (req.files) {
+    let img = req.files["img.name"];
     img.mv("./facilityImg/" + img.name);
     const { location, title, type, installAgency, la, lo } = req.body;
     if (!location)
@@ -78,7 +78,8 @@ exports.postFacilityRegister = async function (req, res) {
         lo,
         img.name
       );
-    return res.send(registerwithImgResponse);}
+    return res.send(registerwithImgResponse);
+  }
   // } else {
   //   const { location, title, type, installAgency, la, lo } = req.body;
   //   const registerResponse = await facilityService.registerFacility(
@@ -124,7 +125,6 @@ exports.postFacilityBookmark = async function (req, res) {
   return res.send(response(baseResponse.SUCCESS, setFacilityBookmark));
 };
 
-
 /**
  * API No. 2-1
  * API Name : 흡연시설 후기 작성
@@ -144,7 +144,6 @@ exports.postFacilityReviews = async function (req, res) {
   );
   return res.send(response(baseResponse.SUCCESS, registerReviewResponse));
 };
-
 
 /**
  * API No. 2-2

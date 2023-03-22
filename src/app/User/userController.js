@@ -48,14 +48,17 @@ exports.getUserInfo = async function (req, res) {
       console.log(userInfo[0].profile);
 
       var fileName = `./upload/${userInfo[0].profile}`;
-      const data = fs.readFileSync(fileName);
-      console.log(data);
+      //const data = fs.readFileSync(fileName);
+      // let img = new Uint8Array(data);
+      // let blob = new Blob([img],{type:'image/jpeg'})
+      // const Url= URL.createObjectURL(blob);
+      // console.log(Url);
 
       // fs.readFile(`'./upload/'${userInfo[0].profile}`,function (err, data){
       //   console.log(data);
       //   }
       // )
-      const result = [userInfo, data];
+      const result = [userInfo, fileName];
       return res.send(response(baseResponse.SUCCESS, result));
     }
   }
