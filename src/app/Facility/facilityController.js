@@ -18,9 +18,9 @@ exports.getFacilitySimpleInfo = async function (req, res) {
     return res.send(response(baseResponse.SUCCESS, facilityInfo));
   } else {
     var fileName = `./facilityImg/${facilityInfo[0].img}`;
-    const data = fs.readFileSync(fileName);
+    //const data = fs.readFileSync(fileName);
 
-    const result = [facilityInfo, data];
+    const result = [facilityInfo, fileName];
     return res.send(response(baseResponse.SUCCESS, result));
   }
 };
@@ -36,14 +36,14 @@ exports.getFacilityDetailInfo = async function (req, res) {
   const facilityInfo = await facilityProvider.retrieveFacilityDetail(
     facilityid
   );
-  //console.log(facilityInfo);
+  console.log(facilityInfo);
 
   if (facilityInfo.img == null) {
-    console.log("1");
     return res.send(response(baseResponse.SUCCESS, facilityInfo));
   } else {
     var fileName = `./facilityImg/${facilityInfo.img}`;
-    const data = fs.readFileSync(fileName);
+    //const data = fs.readFileSync(fileName);
+
     const result = [facilityInfo, fileName];
     return res.send(response(baseResponse.SUCCESS, result));
   }
