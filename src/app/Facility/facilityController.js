@@ -20,7 +20,7 @@ exports.getFacilitySimpleInfo = async function (req, res) {
     var fileName = `./facilityImg/${facilityInfo[0].img}`;
     const data = fs.readFileSync(fileName);
 
-    const result = [facilityInfo, data];
+    const result = [facilityInfo, fileName];
     return res.send(response(baseResponse.SUCCESS, result));
   }
 };
