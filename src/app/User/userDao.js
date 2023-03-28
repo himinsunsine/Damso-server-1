@@ -63,8 +63,24 @@ async function updateUserStatus(connection, userid) {
   return resignUserRow;
 }
 
-//내 제보 현황 조회
+//내 제보 개수 조회
+async function CountMyFacility(connection, userid){
+  const retrieveRegisteredquery = `
+    select COUNT(case when user_id=? then 1 end) from facility;
+  `;
+  const count = await connection.query(retrieveRegisteredquery,userid);
+  return count[0];
+}
 
+//내 제보 현황 조회
+async function MyFacility(connection, userid){
+  const retrieveRegisteredbyuserquery = `
+    select facility_id,title, location, type from facility where user_id=?;
+
+  `;
+  const [count] = await connection.query(retrieveRegisteredbyuserquery,userid);
+  return count;
+}
 //내 정보 수정 - 이미지 --ok
 async function updateUserImage(connection, newparams) {
   const updateUserQuery = `
@@ -108,4 +124,6 @@ module.exports = {
   selectUserInfo,
   updateUserStatus,
   retrieveProfile,
+  CountMyFacility,
+  MyFacility,
 };
