@@ -44,3 +44,14 @@ exports.searchFacility = async function (la, lo) {
 
   return searchFacilityResult;
 };
+exports.reportCheck = async function(reportparams) {
+  const connection = await pool.getConnection(async (conn) => conn);
+
+  const reportCheckResult = await facilityDao.checkReportInfo(
+    connection, 
+    reportparams
+  );
+  connection.release();
+
+  return reportCheckResult;
+}

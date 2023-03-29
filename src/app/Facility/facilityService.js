@@ -91,9 +91,15 @@ exports.registerReview = async function (facilityid, userid, rating, content){
 
 exports.reportfacility = async function (facilityid, userid, reportType){
     try{
+        // 신고 중보 확인
+        const reportparams = [facilityid, userid, reportType];
+        const reportRow = await facilityProvider.reportCheck(reportparams);
+        if (reportRow.length > 0)
+            return errResponse(baseResponse.REPORT_REDUNDANT);
+
+            
         const connection = await pool.getConnection(async (conn)=> conn);
 
-        const reportparams = [facilityid, userid, reportType];
         const reportFacilityResult = await facilityDao.insertReport(connection, reportparams);
         console.log(`${facilityid} 신고 접수 완료`);
         connection.release();
