@@ -39,5 +39,5 @@ module.exports = function (app) {
   app.post("/main/profile/:userid/setting/resign", user.postUserResign);
 
   //5-5 내 제보 현황 조회 api
-  app.get("/main/facility/register/:userid", user.getFacilityRegister);
+  app.get("/main/facility/register/:userid", user.myFacilityRegistered);
 };

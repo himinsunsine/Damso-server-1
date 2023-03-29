@@ -25,3 +25,12 @@ exports.retrieveProfile = async function(userid){
   connection.release();
   return result;
 }
+exports.CountMyFacility = async function(userid){
+  const connection = await pool.getConnection(async (conn)=> conn);
+  const result_count = await userDao.CountMyFacility(connection, userid);
+  const result_facility = await userDao.MyFacility(connection, userid);
+
+  const result = [result_count, result_facility]; 
+  connection.release();
+  return result;
+}

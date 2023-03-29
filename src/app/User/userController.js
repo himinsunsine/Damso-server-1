@@ -126,9 +126,9 @@ exports.postUserResign = async function (req, res) {
  * API Name : 내 제보 현황 조회 API
  * [GET] /main/facility/register/:userid
  */
-exports.getFacilityRegister = async function (req, res) {
+exports.myFacilityRegistered = async function (req, res) {
   const userid = req.params.userid;
 
-  const UserRegisterResponse = await userProvider.getRegistered(userid);
+  const UserRegisterResponse = await userProvider.CountMyFacility(userid);
   return res.send(response(baseResponse.SUCCESS, UserRegisterResponse));
 };
