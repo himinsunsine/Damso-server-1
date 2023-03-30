@@ -10,3 +10,10 @@ exports.retrievePin = async function(){
     connection.release();
     return result;
 }
+exports.retrievePinbyType = async function(type){
+    const connection = await pool.getConnection(async (conn) => conn);
+    const result = await mapDao.selectFacilitiesbyType(connection, type);
+
+    connection.release();
+    return result;
+}
