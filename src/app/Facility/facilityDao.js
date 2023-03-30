@@ -189,6 +189,21 @@ async function insertReport(connection, reportparams) {
   return insertReportRow;
 }
 
+
+//중복 신고 정보 확인
+async function checkReportInfo(connection, checkReportParams) {
+  const checkReportQuery = `
+    SELECT * 
+    FROM report
+    WHERE facility_facility_id = ${checkReportParams[0]} AND user_user_id = ${checkReportParams[1]} AND reportType = ${checkReportParams[2]};`;
+  const checkReportInfoRow = await connection.query(
+    checkReportQuery,
+    checkReportParams
+  );
+
+  return checkReportInfoRow;
+}
+
 module.exports = {
   selectFacilityInfo,
   selectFacilityDetailInfo,
@@ -199,4 +214,5 @@ module.exports = {
   insertReview,
   insertReport,
   searchFacilityInfo,
+  checkReportInfo
 };
