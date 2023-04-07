@@ -57,4 +57,7 @@ module.exports = {
     code: 4002,
     message: "회원가입 에러-이메일 중복",
   },
+
+  //Request Error
+  REPORT_REDUNDANT: {isSuccess: false, code: 3005, message: "이미 접수된 신고입니다"},
 };

@@ -128,17 +128,53 @@ async function insertBookmark(connection, newparams) {
   return insertBookmark;
 }
 
-
 //2-1. 후기 작성
 async function insertReview(connection, reviewparams) {
+  // reviewparams -> [ 'facility_id', 'user_id', 'rating', 'content' ]
+  //별점 업데이트
+  const ratingCount = `
+    SELECT rating
+    FROM facility
+    WHERE facility_id = ${reviewparams[0]};
+  `;
+  const [checkRatingCount] = await connection.query(ratingCount);
+
+  const ratingCalc = function () {
+    let beforeRatingCalc = Number(checkRatingCount[0].rating);
+    let newRatingCalc = 0;
+    if (beforeRatingCalc === 0) {
+      newRatingCalc = Number(reviewparams[2]);
+      console.log(newRatingCalc);
+    } else {
+      newRatingCalc = (beforeRatingCalc + Number(reviewparams[2])) / 2;
+      console.log(newRatingCalc);
+    }
+    return newRatingCalc;
+  };
+
+  const ratingCalcResult = ratingCalc();
+
+  const updateRating = ` 
+    UPDATE facility 
+    SET rating = ${ratingCalcResult}
+    WHERE facility_id = ${reviewparams[0]};
+  `;
+  const updateFaclityRating = await connection.query(
+    updateRating,
+    reviewparams
+  );
+
+  //후기 작성
   const insertReviewQuery = `
   INSERT INTO review(facility_facility_id, user_user_id, rating, content, createdAt)
   VALUES(?, ?, ?, ?, NOW());
   `;
-  const [insertReviewRow] = await connection.query(insertReviewQuery, reviewparams);
-  return insertReviewRow;
+  const [insertReviewRow] = await connection.query(
+    insertReviewQuery,
+    reviewparams
+  );
+  return updateFaclityRating, insertReviewRow;
 }
-
 
 //2-2. 신고 접수
 async function insertReport(connection, reportparams) {
@@ -146,8 +182,26 @@ async function insertReport(connection, reportparams) {
   INSERT INTO report(facility_facility_id, user_user_id, reportType, createdAt)
   VALUES(?, ?, ?, NOW());
   `;
-  const [insertReportRow] = await connection.query(insertReportQuery, reportparams);
+  const [insertReportRow] = await connection.query(
+    insertReportQuery,
+    reportparams
+  );
   return insertReportRow;
+}
+
+
+//중복 신고 정보 확인
+async function checkReportInfo(connection, checkReportParams) {
+  const checkReportQuery = `
+    SELECT * 
+    FROM report
+    WHERE facility_facility_id = ${checkReportParams[0]} AND user_user_id = ${checkReportParams[1]} AND reportType = ${checkReportParams[2]};`;
+  const checkReportInfoRow = await connection.query(
+    checkReportQuery,
+    checkReportParams
+  );
+
+  return checkReportInfoRow;
 }
 
 module.exports = {
@@ -160,4 +214,5 @@ module.exports = {
   insertReview,
   insertReport,
   searchFacilityInfo,
+  checkReportInfo
 };

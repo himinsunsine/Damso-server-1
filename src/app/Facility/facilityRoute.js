@@ -21,4 +21,5 @@ module.exports = function (app) {
 
   //2-2. 허위 정보 신고 api
   app.post("/main/facility/:facilityid/report", facility.postFacilityReport);
+
 };
